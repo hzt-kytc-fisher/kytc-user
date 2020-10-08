@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kytc.user.dao.mapper.RoleMapperEx">
+	<sql id="queryCondition">
+		<where>
+			<if test="parentId != null ">
+				and parent_id = #{parentId,jdbcType=BIGINT}
+			</if>
+			<if test="roleKey != null ">
+				and role_key = #{roleKey,jdbcType=VARCHAR}
+			</if>
+			<if test="roleName != null ">
+				and role_name = #{roleName,jdbcType=VARCHAR}
+			</if>
+			<if test="isDeleted != null ">
+				and is_deleted = #{isDeleted,jdbcType=BIT}
+			</if>
+			<if test="level != null ">
+				and level = #{level,jdbcType=VARCHAR}
+			</if>
+			<if test="description != null ">
+				and description = #{description,jdbcType=VARCHAR}
+			</if>
+			and is_deleted = 0
+		</where>
+	</sql>
+	<select id="listByCondition" resultMap="com.kytc.user.dao.mapper.RoleMapper.BaseResultMap">
+		select 
+		<include refid="com.kytc.user.dao.mapper.RoleMapper.Base_Column_List"></include>
+		from t_role
+		<include refid="queryCondition"></include>
+		order by updated_at desc
+		limit #{start},#{limit}
+	</select>
+	<select id="countByCondition" resultType="Long">
+		select
+			count(1)
+		from t_role
+		<include refid="queryCondition"></include>
+	</select>
+</mapper>

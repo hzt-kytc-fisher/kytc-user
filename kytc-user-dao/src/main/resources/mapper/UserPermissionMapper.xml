@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kytc.user.dao.mapper.UserPermissionMapper">
+	<resultMap id="BaseResultMap" type="com.kytc.user.dao.data.UserPermissionData">
+		<id column="id" jdbcType="BIGINT" property="id" />
+		<result column="user_id" jdbcType="BIGINT" property="userId" />
+		<result column="permission_id" jdbcType="BIGINT" property="permissionId" />
+		<result column="created_by" jdbcType="VARCHAR" property="createdBy" />
+		<result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+		<result column="updated_by" jdbcType="VARCHAR" property="updatedBy" />
+		<result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id,user_id,permission_id,created_by,created_at,updated_by,updated_at
+	</sql>
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		select 
+		<include refid="Base_Column_List" />
+		from t_user_permission
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from t_user_permission
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.kytc.user.dao.data.UserPermissionData">
+		insert into t_user_permission (
+			id,user_id,permission_id,created_by,created_at,updated_by,updated_at
+		) 
+		values (
+			#{id,jdbcType=BIGINT},#{userId,jdbcType=BIGINT},#{permissionId,jdbcType=BIGINT},#{createdBy,jdbcType=VARCHAR},#{createdAt,jdbcType=TIMESTAMP},#{updatedBy,jdbcType=VARCHAR},#{updatedAt,jdbcType=TIMESTAMP}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.kytc.user.dao.data.UserPermissionData">
+		insert into t_user_permission
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="permissionId != null">
+				permission_id,
+			</if>
+			<if test="createdBy != null">
+				created_by,
+			</if>
+			<if test="createdAt != null">
+				created_at,
+			</if>
+			<if test="updatedBy != null">
+				updated_by,
+			</if>
+			<if test="updatedAt != null">
+				updated_at,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=BIGINT},
+			</if>
+			<if test="permissionId != null">
+				#{permissionId,jdbcType=BIGINT},
+			</if>
+			<if test="createdBy != null">
+				#{createdBy,jdbcType=VARCHAR},
+			</if>
+			<if test="createdAt != null">
+				#{createdAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updatedBy != null">
+				#{updatedBy,jdbcType=VARCHAR},
+			</if>
+			<if test="updatedAt != null">
+				#{updatedAt,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.kytc.user.dao.data.UserPermissionData">
+		update t_user_permission
+		<set>
+			<if test="id != null">
+				id = #{id,jdbcType=BIGINT},
+			</if>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=BIGINT},
+			</if>
+			<if test="permissionId != null">
+				permission_id = #{permissionId,jdbcType=BIGINT},
+			</if>
+			<if test="createdBy != null">
+				created_by = #{createdBy,jdbcType=VARCHAR},
+			</if>
+			<if test="createdAt != null">
+				created_at = #{createdAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updatedBy != null">
+				updated_by = #{updatedBy,jdbcType=VARCHAR},
+			</if>
+			<if test="updatedAt != null">
+				updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		<where>id = #{id,jdbcType=BIGINT}</where>
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.kytc.user.dao.data.UserPermissionData">
+		update t_user_permission
+		set 
+			id = #{id,jdbcType=BIGINT},
+			user_id = #{userId,jdbcType=BIGINT},
+			permission_id = #{permissionId,jdbcType=BIGINT},
+			created_by = #{createdBy,jdbcType=VARCHAR},
+			created_at = #{createdAt,jdbcType=TIMESTAMP},
+			updated_by = #{updatedBy,jdbcType=VARCHAR},
+			updated_at = #{updatedAt,jdbcType=TIMESTAMP}
+		where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kytc.user.dao.mapper.DepartmentMapper">
+	<resultMap id="BaseResultMap" type="com.kytc.user.dao.data.DepartmentData">
+		<id column="id" jdbcType="BIGINT" property="id" />
+		<result column="parent_id" jdbcType="BIGINT" property="parentId" />
+		<result column="dept_key" jdbcType="VARCHAR" property="deptKey" />
+		<result column="dept_name" jdbcType="VARCHAR" property="deptName" />
+		<result column="address" jdbcType="VARCHAR" property="address" />
+		<result column="remark" jdbcType="VARCHAR" property="remark" />
+		<result column="level" jdbcType="VARCHAR" property="level" />
+		<result column="created_by" jdbcType="VARCHAR" property="createdBy" />
+		<result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+		<result column="updated_by" jdbcType="VARCHAR" property="updatedBy" />
+		<result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id,parent_id,dept_key,dept_name,address,remark,level,created_by,created_at,updated_by,updated_at
+	</sql>
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		select 
+		<include refid="Base_Column_List" />
+		from t_department
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from t_department
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.kytc.user.dao.data.DepartmentData">
+		insert into t_department (
+			id,parent_id,dept_key,dept_name,address,remark,level,created_by,created_at,updated_by,updated_at
+		) 
+		values (
+			#{id,jdbcType=BIGINT},#{parentId,jdbcType=BIGINT},#{deptKey,jdbcType=VARCHAR},#{deptName,jdbcType=VARCHAR},#{address,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR},#{level,jdbcType=VARCHAR},#{createdBy,jdbcType=VARCHAR},#{createdAt,jdbcType=TIMESTAMP},#{updatedBy,jdbcType=VARCHAR},#{updatedAt,jdbcType=TIMESTAMP}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.kytc.user.dao.data.DepartmentData">
+		insert into t_department
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="parentId != null">
+				parent_id,
+			</if>
+			<if test="deptKey != null">
+				dept_key,
+			</if>
+			<if test="deptName != null">
+				dept_name,
+			</if>
+			<if test="address != null">
+				address,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+			<if test="level != null">
+				level,
+			</if>
+			<if test="createdBy != null">
+				created_by,
+			</if>
+			<if test="createdAt != null">
+				created_at,
+			</if>
+			<if test="updatedBy != null">
+				updated_by,
+			</if>
+			<if test="updatedAt != null">
+				updated_at,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="parentId != null">
+				#{parentId,jdbcType=BIGINT},
+			</if>
+			<if test="deptKey != null">
+				#{deptKey,jdbcType=VARCHAR},
+			</if>
+			<if test="deptName != null">
+				#{deptName,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				#{address,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="level != null">
+				#{level,jdbcType=VARCHAR},
+			</if>
+			<if test="createdBy != null">
+				#{createdBy,jdbcType=VARCHAR},
+			</if>
+			<if test="createdAt != null">
+				#{createdAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updatedBy != null">
+				#{updatedBy,jdbcType=VARCHAR},
+			</if>
+			<if test="updatedAt != null">
+				#{updatedAt,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.kytc.user.dao.data.DepartmentData">
+		update t_department
+		<set>
+			<if test="id != null">
+				id = #{id,jdbcType=BIGINT},
+			</if>
+			<if test="parentId != null">
+				parent_id = #{parentId,jdbcType=BIGINT},
+			</if>
+			<if test="deptKey != null">
+				dept_key = #{deptKey,jdbcType=VARCHAR},
+			</if>
+			<if test="deptName != null">
+				dept_name = #{deptName,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				address = #{address,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="level != null">
+				level = #{level,jdbcType=VARCHAR},
+			</if>
+			<if test="createdBy != null">
+				created_by = #{createdBy,jdbcType=VARCHAR},
+			</if>
+			<if test="createdAt != null">
+				created_at = #{createdAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updatedBy != null">
+				updated_by = #{updatedBy,jdbcType=VARCHAR},
+			</if>
+			<if test="updatedAt != null">
+				updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		<where>id = #{id,jdbcType=BIGINT}</where>
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.kytc.user.dao.data.DepartmentData">
+		update t_department
+		set 
+			id = #{id,jdbcType=BIGINT},
+			parent_id = #{parentId,jdbcType=BIGINT},
+			dept_key = #{deptKey,jdbcType=VARCHAR},
+			dept_name = #{deptName,jdbcType=VARCHAR},
+			address = #{address,jdbcType=VARCHAR},
+			remark = #{remark,jdbcType=VARCHAR},
+			level = #{level,jdbcType=VARCHAR},
+			created_by = #{createdBy,jdbcType=VARCHAR},
+			created_at = #{createdAt,jdbcType=TIMESTAMP},
+			updated_by = #{updatedBy,jdbcType=VARCHAR},
+			updated_at = #{updatedAt,jdbcType=TIMESTAMP}
+		where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

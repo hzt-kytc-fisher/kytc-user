@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kytc.user.dao.mapper.PermissionMapperEx">
+	<sql id="queryCondition">
+		<where>
+			<if test="parentId != null ">
+				and parent_id = #{parentId,jdbcType=BIGINT}
+			</if>
+			<if test="permissionKey != null ">
+				and permission_key = #{permissionKey,jdbcType=VARCHAR}
+			</if>
+			<if test="permissionName != null ">
+				and permission_name = #{permissionName,jdbcType=VARCHAR}
+			</if>
+			<if test="url != null ">
+				and url = #{url,jdbcType=VARCHAR}
+			</if>
+			<if test="level != null ">
+				and level = #{level,jdbcType=VARCHAR}
+			</if>
+			<if test="description != null ">
+				and description = #{description,jdbcType=VARCHAR}
+			</if>
+			<if test="idDeleted != null ">
+				and id_deleted = #{idDeleted,jdbcType=BIT}
+			</if>
+		</where>
+	</sql>
+	<select id="listByCondition" resultMap="com.kytc.user.dao.mapper.PermissionMapper.BaseResultMap">
+		select 
+		<include refid="com.kytc.user.dao.mapper.PermissionMapper.Base_Column_List"></include>
+		from t_permission
+		<include refid="queryCondition"></include>
+		order by updated_at desc
+		limit #{start},#{limit}
+	</select>
+	<select id="countByCondition" resultType="Long">
+		select
+			count(1)
+		from t_permission
+		<include refid="queryCondition"></include>
+	</select>
+</mapper>

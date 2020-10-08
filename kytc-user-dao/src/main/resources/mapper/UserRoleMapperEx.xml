@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kytc.user.dao.mapper.UserRoleMapperEx">
+	<sql id="queryCondition">
+		<where>
+			<if test="userId != null ">
+				and user_id = #{userId,jdbcType=BIGINT}
+			</if>
+			<if test="roleId != null ">
+				and role_id = #{roleId,jdbcType=BIGINT}
+			</if>
+		</where>
+	</sql>
+	<select id="listByCondition" resultMap="com.kytc.user.dao.mapper.UserRoleMapper.BaseResultMap">
+		select 
+		<include refid="com.kytc.user.dao.mapper.UserRoleMapper.Base_Column_List"></include>
+		from t_user_role
+		<include refid="queryCondition"></include>
+		order by updated_at desc
+		limit #{start},#{limit}
+	</select>
+	<select id="countByCondition" resultType="Long">
+		select
+			count(1)
+		from t_user_role
+		<include refid="queryCondition"></include>
+	</select>
+</mapper>

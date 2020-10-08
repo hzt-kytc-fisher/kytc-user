@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kytc.user.dao.mapper.PermissionMapper">
+	<resultMap id="BaseResultMap" type="com.kytc.user.dao.data.PermissionData">
+		<id column="id" jdbcType="BIGINT" property="id" />
+		<result column="parent_id" jdbcType="BIGINT" property="parentId" />
+		<result column="permission_key" jdbcType="VARCHAR" property="permissionKey" />
+		<result column="permission_name" jdbcType="VARCHAR" property="permissionName" />
+		<result column="url" jdbcType="VARCHAR" property="url" />
+		<result column="level" jdbcType="VARCHAR" property="level" />
+		<result column="description" jdbcType="VARCHAR" property="description" />
+		<result column="id_deleted" jdbcType="BIT" property="idDeleted" />
+		<result column="created_by" jdbcType="VARCHAR" property="createdBy" />
+		<result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+		<result column="updated_by" jdbcType="VARCHAR" property="updatedBy" />
+		<result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id,parent_id,permission_key,permission_name,url,level,description,id_deleted,created_by,created_at,updated_by,updated_at
+	</sql>
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		select 
+		<include refid="Base_Column_List" />
+		from t_permission
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from t_permission
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.kytc.user.dao.data.PermissionData">
+		insert into t_permission (
+			id,parent_id,permission_key,permission_name,url,level,description,id_deleted,created_by,created_at,updated_by,updated_at
+		) 
+		values (
+			#{id,jdbcType=BIGINT},#{parentId,jdbcType=BIGINT},#{permissionKey,jdbcType=VARCHAR},#{permissionName,jdbcType=VARCHAR},#{url,jdbcType=VARCHAR},#{level,jdbcType=VARCHAR},#{description,jdbcType=VARCHAR},#{idDeleted,jdbcType=BIT},#{createdBy,jdbcType=VARCHAR},#{createdAt,jdbcType=TIMESTAMP},#{updatedBy,jdbcType=VARCHAR},#{updatedAt,jdbcType=TIMESTAMP}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.kytc.user.dao.data.PermissionData">
+		insert into t_permission
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="parentId != null">
+				parent_id,
+			</if>
+			<if test="permissionKey != null">
+				permission_key,
+			</if>
+			<if test="permissionName != null">
+				permission_name,
+			</if>
+			<if test="url != null">
+				url,
+			</if>
+			<if test="level != null">
+				level,
+			</if>
+			<if test="description != null">
+				description,
+			</if>
+			<if test="idDeleted != null">
+				id_deleted,
+			</if>
+			<if test="createdBy != null">
+				created_by,
+			</if>
+			<if test="createdAt != null">
+				created_at,
+			</if>
+			<if test="updatedBy != null">
+				updated_by,
+			</if>
+			<if test="updatedAt != null">
+				updated_at,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="parentId != null">
+				#{parentId,jdbcType=BIGINT},
+			</if>
+			<if test="permissionKey != null">
+				#{permissionKey,jdbcType=VARCHAR},
+			</if>
+			<if test="permissionName != null">
+				#{permissionName,jdbcType=VARCHAR},
+			</if>
+			<if test="url != null">
+				#{url,jdbcType=VARCHAR},
+			</if>
+			<if test="level != null">
+				#{level,jdbcType=VARCHAR},
+			</if>
+			<if test="description != null">
+				#{description,jdbcType=VARCHAR},
+			</if>
+			<if test="idDeleted != null">
+				#{idDeleted,jdbcType=BIT},
+			</if>
+			<if test="createdBy != null">
+				#{createdBy,jdbcType=VARCHAR},
+			</if>
+			<if test="createdAt != null">
+				#{createdAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updatedBy != null">
+				#{updatedBy,jdbcType=VARCHAR},
+			</if>
+			<if test="updatedAt != null">
+				#{updatedAt,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.kytc.user.dao.data.PermissionData">
+		update t_permission
+		<set>
+			<if test="id != null">
+				id = #{id,jdbcType=BIGINT},
+			</if>
+			<if test="parentId != null">
+				parent_id = #{parentId,jdbcType=BIGINT},
+			</if>
+			<if test="permissionKey != null">
+				permission_key = #{permissionKey,jdbcType=VARCHAR},
+			</if>
+			<if test="permissionName != null">
+				permission_name = #{permissionName,jdbcType=VARCHAR},
+			</if>
+			<if test="url != null">
+				url = #{url,jdbcType=VARCHAR},
+			</if>
+			<if test="level != null">
+				level = #{level,jdbcType=VARCHAR},
+			</if>
+			<if test="description != null">
+				description = #{description,jdbcType=VARCHAR},
+			</if>
+			<if test="idDeleted != null">
+				id_deleted = #{idDeleted,jdbcType=BIT},
+			</if>
+			<if test="createdBy != null">
+				created_by = #{createdBy,jdbcType=VARCHAR},
+			</if>
+			<if test="createdAt != null">
+				created_at = #{createdAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updatedBy != null">
+				updated_by = #{updatedBy,jdbcType=VARCHAR},
+			</if>
+			<if test="updatedAt != null">
+				updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		<where>id = #{id,jdbcType=BIGINT}</where>
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.kytc.user.dao.data.PermissionData">
+		update t_permission
+		set 
+			id = #{id,jdbcType=BIGINT},
+			parent_id = #{parentId,jdbcType=BIGINT},
+			permission_key = #{permissionKey,jdbcType=VARCHAR},
+			permission_name = #{permissionName,jdbcType=VARCHAR},
+			url = #{url,jdbcType=VARCHAR},
+			level = #{level,jdbcType=VARCHAR},
+			description = #{description,jdbcType=VARCHAR},
+			id_deleted = #{idDeleted,jdbcType=BIT},
+			created_by = #{createdBy,jdbcType=VARCHAR},
+			created_at = #{createdAt,jdbcType=TIMESTAMP},
+			updated_by = #{updatedBy,jdbcType=VARCHAR},
+			updated_at = #{updatedAt,jdbcType=TIMESTAMP}
+		where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
