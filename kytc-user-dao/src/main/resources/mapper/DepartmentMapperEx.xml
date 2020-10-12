@@ -12,15 +12,6 @@
 			<if test="deptName != null ">
 				and dept_name = #{deptName,jdbcType=VARCHAR}
 			</if>
-			<if test="address != null ">
-				and address = #{address,jdbcType=VARCHAR}
-			</if>
-			<if test="remark != null ">
-				and remark = #{remark,jdbcType=VARCHAR}
-			</if>
-			<if test="level != null ">
-				and level = #{level,jdbcType=VARCHAR}
-			</if>
 		</where>
 	</sql>
 	<select id="listByCondition" resultMap="com.kytc.user.dao.mapper.DepartmentMapper.BaseResultMap">
@@ -36,5 +27,11 @@
 			count(1)
 		from t_department
 		<include refid="queryCondition"></include>
+	</select>
+	<select id="getByParentId" resultMap="com.kytc.user.dao.mapper.DepartmentMapper.BaseResultMap">
+		select
+		count(1)
+		from t_department
+		where parent_id = #{parentId,jdbcType=BIGINT}
 	</select>
 </mapper>

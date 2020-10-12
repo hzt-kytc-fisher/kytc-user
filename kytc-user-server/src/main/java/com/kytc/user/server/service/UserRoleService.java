@@ -1,13 +1,17 @@
 package com.kytc.user.server.service;
 
 import com.kytc.user.request.UserRoleRequest;
+import com.kytc.user.request.UserRoleSearchRequest;
 import com.kytc.user.response.UserRoleResponse;
 import com.kytc.framework.web.common.BasePageResponse;
 
 
 public interface UserRoleService {
 
-	boolean add(UserRoleRequest request);
+	BasePageResponse<UserRoleResponse> listByCondition(
+            UserRoleSearchRequest request);
+
+	Long add(UserRoleRequest request);
 
 	boolean update(UserRoleRequest request);
 
@@ -15,8 +19,5 @@ public interface UserRoleService {
 
 	boolean delete(Long id);
 
-	BasePageResponse<UserRoleResponse> listByCondition(
-		UserRoleRequest request,
-		int page,
-		int pageSize);
+	boolean delete(Long userId, Long roleId);
 }

@@ -1,5 +1,6 @@
 package com.kytc.user.server.service;
 
+import com.kytc.user.request.LoginRequest;
 import com.kytc.user.request.UserLoginRequest;
 import com.kytc.user.response.UserLoginResponse;
 import com.kytc.framework.web.common.BasePageResponse;
@@ -16,7 +17,7 @@ public interface UserLoginService {
 	boolean delete(Long id);
 
 	BasePageResponse<UserLoginResponse> listByCondition(
-		UserLoginRequest request,
-		int page,
-		int pageSize);
+		UserLoginRequest request);
+
+	UserLoginResponse login(LoginRequest request);
 }

@@ -17,14 +17,10 @@ public class UserLoginResponse implements Serializable {
 	private String loginType;
 	@ApiModelProperty("登录key")
 	private String loginKey;
-	@ApiModelProperty("密码")
-	private String loginPassword;
 	@ApiModelProperty("用户ID")
 	private Long userId;
 	@ApiModelProperty("是否删除 1是 0否")
 	private Boolean isDeleted;
-	@ApiModelProperty("盐")
-	private String salt;
 	@ApiModelProperty("创建人员")
 	private String createdBy;
 	@ApiModelProperty("创建日期")

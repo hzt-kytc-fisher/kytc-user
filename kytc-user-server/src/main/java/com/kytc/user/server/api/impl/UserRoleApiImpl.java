@@ -1,6 +1,7 @@
 package com.kytc.user.server.api.impl;
 
 import com.kytc.user.request.UserRoleRequest;
+import com.kytc.user.request.UserRoleSearchRequest;
 import com.kytc.user.response.UserRoleResponse;
 import com.kytc.user.api.UserRoleApi;
 import com.kytc.user.server.service.UserRoleService;
@@ -23,14 +24,12 @@ public class UserRoleApiImpl implements UserRoleApi {
 
 	@Override
 	public BasePageResponse<UserRoleResponse> listByCondition(
-		@RequestBody @Valid UserRoleRequest request,
-		@RequestParam("index")int page,
-		@RequestParam("pageSize")int pageSize){
-			return this.userRoleService.listByCondition( request,page, pageSize);
+		@RequestBody @Valid UserRoleSearchRequest request){
+			return this.userRoleService.listByCondition( request );
 	}
 
 	@Override
-	public boolean add(@RequestBody @Valid UserRoleRequest request) {
+	public Long add(@RequestBody @Valid UserRoleRequest request) {
 		return this.userRoleService.add(request);
 	}
 
@@ -47,5 +46,10 @@ public class UserRoleApiImpl implements UserRoleApi {
 	@Override
 	public UserRoleResponse detail(@PathVariable("id") Long id) {
 		return this.userRoleService.detail(id);
+	}
+
+	@Override
+	public boolean delete(@RequestParam("userId") Long userId,@RequestParam("roleId") Long roleId){
+		return this.userRoleService.delete(userId,roleId);
 	}
 }

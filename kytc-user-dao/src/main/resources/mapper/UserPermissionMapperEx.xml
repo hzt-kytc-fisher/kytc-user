@@ -17,12 +17,22 @@
 		from t_user_permission
 		<include refid="queryCondition"></include>
 		order by updated_at desc
-		limit #{start},#{limit}
+		<if test="limit > 0">
+			limit #{start},#{limit}
+		</if>
 	</select>
 	<select id="countByCondition" resultType="Long">
 		select
 			count(1)
 		from t_user_permission
 		<include refid="queryCondition"></include>
+	</select>
+	<select id="getByUserIdAndPermissionId" resultMap="com.kytc.user.dao.mapper.UserPermissionMapper.BaseResultMap">
+		select
+		<include refid="com.kytc.user.dao.mapper.UserPermissionMapper.Base_Column_List"></include>
+		from t_user_permission
+		where
+			user_id = #{userId,jdbcType=BIGINT}
+		and permission_id = #{permissionId,jdbcType=BIGINT}
 	</select>
 </mapper>

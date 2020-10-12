@@ -33,6 +33,10 @@
         <groupId>com.kytc</groupId>
         <artifactId>framework-web</artifactId>
       </dependency>
+    <dependency>
+      <groupId>com.kytc</groupId>
+      <artifactId>framework-exception</artifactId>
+    </dependency>
   </dependencies>
   <build>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->

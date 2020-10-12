@@ -1,6 +1,7 @@
 package com.kytc.user.api;
 
 import com.kytc.user.request.DepartmentRequest;
+import com.kytc.user.request.DepartmentSearchRequest;
 import com.kytc.user.response.DepartmentResponse;
 
 import com.kytc.framework.web.common.BasePageResponse;
@@ -17,9 +18,7 @@ public interface DepartmentApi {
 	@ApiOperation("查询部门信息列表")
 	@PostMapping("/infos")
 	BasePageResponse<DepartmentResponse> listByCondition(
-            @RequestBody DepartmentRequest request,
-            @RequestParam("page") int page,
-            @RequestParam("pageSize") int pageSize);
+            @RequestBody DepartmentSearchRequest request);
 
 	@ApiOperation("添加部门信息数据")
 	@PostMapping("/info")

@@ -3,6 +3,9 @@
 <mapper namespace="com.kytc.user.dao.mapper.UserRoleMapperEx">
 	<sql id="queryCondition">
 		<where>
+			<if test="id != null ">
+				and id = #{id,jdbcType=BIGINT}
+			</if>
 			<if test="userId != null ">
 				and user_id = #{userId,jdbcType=BIGINT}
 			</if>
@@ -17,12 +20,27 @@
 		from t_user_role
 		<include refid="queryCondition"></include>
 		order by updated_at desc
-		limit #{start},#{limit}
+		<if test="limit > 0">
+			limit #{start},#{limit}
+		</if>
 	</select>
 	<select id="countByCondition" resultType="Long">
 		select
 			count(1)
 		from t_user_role
 		<include refid="queryCondition"></include>
+	</select>
+	<delete id="deleteByUserIdAndRoleId">
+		delete from t_user_role
+		where  user_id = #{userId,jdbcType=BIGINT} 
+		AND role_id = #{roleId,jdbcType=BIGINT} 
+	</delete>
+	<select id="getByUserIdAndRoleId" resultMap="com.kytc.user.dao.mapper.UserRoleMapper.BaseResultMap">
+		select
+			<include refid="com.kytc.user.dao.mapper.UserRoleMapper.Base_Column_List"></include>
+		from t_user_role
+		where  user_id = #{userId,jdbcType=BIGINT} 
+		AND role_id = #{roleId,jdbcType=BIGINT} 
+		limit 1
 	</select>
 </mapper>

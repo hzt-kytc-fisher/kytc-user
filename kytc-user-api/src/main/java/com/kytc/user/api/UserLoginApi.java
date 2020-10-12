@@ -17,9 +17,7 @@ public interface UserLoginApi {
 	@ApiOperation("查询用户登录信息列表")
 	@PostMapping("/infos")
 	BasePageResponse<UserLoginResponse> listByCondition(
-            @RequestBody UserLoginRequest request,
-            @RequestParam("page") int page,
-            @RequestParam("pageSize") int pageSize);
+            @RequestBody UserLoginRequest request);
 
 	@ApiOperation("添加用户登录信息数据")
 	@PostMapping("/info")
@@ -36,4 +34,8 @@ public interface UserLoginApi {
 	@ApiOperation("查询用户登录信息详情")
 	@GetMapping("/{id}")
 	UserLoginResponse detail(@PathVariable("id") Long id);
+
+	@ApiOperation("登录")
+	@GetMapping("/info")
+	UserLoginResponse login(@RequestBody @Valid UserLoginRequest request);
 }

@@ -1,9 +1,12 @@
 package com.kytc.user.server.impl;
 
+import com.kytc.framework.exception.BaseErrorCodeEnum;
+import com.kytc.framework.exception.BaseException;
 import com.kytc.framework.web.common.BasePageResponse;
 import com.kytc.framework.web.utils.BeanUtils;
 import com.kytc.user.server.service.UserRoleService;
 import com.kytc.user.request.UserRoleRequest;
+import com.kytc.user.request.UserRoleSearchRequest;
 import com.kytc.user.response.UserRoleResponse;
 import com.kytc.user.dao.data.UserRoleData;
 import com.kytc.user.dao.mapper.UserRoleMapperEx;
@@ -21,14 +24,15 @@ public class UserRoleServiceImpl implements UserRoleService {
 	private final UserRoleMapperEx userRoleMapperEx;
 
 	@Override
-	public boolean add(UserRoleRequest request){
-		if( null != request ){
-			UserRoleData userRoleData = BeanUtils.convert(request, UserRoleData.class);
-			userRoleData.setCreatedAt(new Date());
-			userRoleData.setUpdatedAt(new Date());
-			return this.userRoleMapperEx.insert(userRoleData)>0;
+	public Long add(UserRoleRequest request){
+		UserRoleData userRoleData = BeanUtils.convert(request, UserRoleData.class);
+		userRoleData.setCreatedAt(new Date());
+		userRoleData.setUpdatedAt(new Date());
+		this.userRoleMapperEx.insert(userRoleData);
+		if(null == userRoleData.getId()){
+			throw new BaseException(BaseErrorCodeEnum.SYSTEM_ERROR,"添加失败");
 		}
-		return false;
+		return userRoleData.getId();
 	}
 
 	@Override
@@ -56,23 +60,28 @@ public class UserRoleServiceImpl implements UserRoleService {
 	}
 
 	@Override
-	public BasePageResponse<UserRoleResponse> listByCondition(UserRoleRequest request,int page, int pageSize){
+	public BasePageResponse<UserRoleResponse> listByCondition( UserRoleSearchRequest request ){
 		BasePageResponse<UserRoleResponse> pageResponse = new BasePageResponse<>();
-		pageResponse.setRows(this.listByConditionData(request,page, pageSize));
-		pageResponse.setTotal(this.countByConditionData(request));
-		pageResponse.setPage(page);
-		pageResponse.setPageSize(pageSize);
+		pageResponse.setRows(this.listByConditionData( request ));
+		pageResponse.setTotal(this.countByConditionData( request ));
+		pageResponse.setPage(request.getPage());
+		pageResponse.setPageSize(request.getPageSize());
 		return pageResponse;
 	}
 
-	private List<UserRoleResponse> listByConditionData(UserRoleRequest request,int page,int pageSize){
-		int start = page * pageSize;
-		List<UserRoleData> list =  this.userRoleMapperEx.listByCondition(request.getUserId(), request.getRoleId(), start, pageSize);
+	private List<UserRoleResponse> listByConditionData( UserRoleSearchRequest request ){
+		request.init();
+		List<UserRoleData> list =  this.userRoleMapperEx.listByCondition(request.getId(), request.getUserId(), request.getRoleId(), request.getStart(), request.getLimit());
 		return BeanUtils.convert(list,UserRoleResponse.class);
 	}
 
 
-	private Long countByConditionData(UserRoleRequest request){
-		return this.userRoleMapperEx.countByCondition(request.getUserId(), request.getRoleId());
+	private Long countByConditionData(UserRoleSearchRequest request){
+		return this.userRoleMapperEx.countByCondition(request.getId(), request.getUserId(), request.getRoleId());
+	}
+
+	@Override
+	public boolean delete( Long userId, Long roleId){
+		return this.userRoleMapperEx.deleteByUserIdAndRoleId(userId,roleId)>0;
 	}
 }

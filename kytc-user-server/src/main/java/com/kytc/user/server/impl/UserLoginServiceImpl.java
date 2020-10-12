@@ -1,13 +1,18 @@
 package com.kytc.user.server.impl;
 
+import com.kytc.framework.exception.BaseErrorCodeEnum;
+import com.kytc.framework.exception.BaseException;
 import com.kytc.framework.web.common.BasePageResponse;
 import com.kytc.framework.web.utils.BeanUtils;
+import com.kytc.user.request.LoginRequest;
 import com.kytc.user.server.service.UserLoginService;
 import com.kytc.user.request.UserLoginRequest;
 import com.kytc.user.response.UserLoginResponse;
 import com.kytc.user.dao.data.UserLoginData;
 import com.kytc.user.dao.mapper.UserLoginMapperEx;
+import com.kytc.user.server.utils.EncryptUtils;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +20,9 @@ import java.util.Date;
 import java.util.List;
 
 
+/**
+ * @author hezhitong
+ */
 @Component
 @RequiredArgsConstructor(onConstructor_={@Autowired})
 public class UserLoginServiceImpl implements UserLoginService {
@@ -24,6 +32,8 @@ public class UserLoginServiceImpl implements UserLoginService {
 	public boolean add(UserLoginRequest request){
 		if( null != request ){
 			UserLoginData userLoginData = BeanUtils.convert(request, UserLoginData.class);
+			userLoginData.setSalt(RandomStringUtils.randomAlphabetic(64));
+			userLoginData.setLoginPassword(EncryptUtils.getInstance().sha(userLoginData.getSalt(),userLoginData.getLoginPassword()));
 			userLoginData.setCreatedAt(new Date());
 			userLoginData.setUpdatedAt(new Date());
 			return this.userLoginMapperEx.insert(userLoginData)>0;
@@ -60,23 +70,36 @@ public class UserLoginServiceImpl implements UserLoginService {
 	}
 
 	@Override
-	public BasePageResponse<UserLoginResponse> listByCondition(UserLoginRequest request,int page, int pageSize){
+	public BasePageResponse<UserLoginResponse> listByCondition(UserLoginRequest request){
 		BasePageResponse<UserLoginResponse> pageResponse = new BasePageResponse<>();
-		pageResponse.setRows(this.listByConditionData(request,page, pageSize));
+		pageResponse.setRows(this.listByConditionData(request,request.getPage(), request.getPageSize()));
 		pageResponse.setTotal(this.countByConditionData(request));
-		pageResponse.setPage(page);
-		pageResponse.setPageSize(pageSize);
+		pageResponse.setPage(request.getPage());
+		pageResponse.setPageSize(request.getPageSize());
 		return pageResponse;
+	}
+
+	@Override
+	public UserLoginResponse login(LoginRequest request) {
+		UserLoginData userLoginData = this.userLoginMapperEx.getByLoginTypeAndKey(request.getLoginTypeEnum().getValue(),request.getLoginKey());
+		if( null == userLoginData ){
+			throw new BaseException(BaseErrorCodeEnum.DATA_NOT_FOUND,"用户名或密码错误");
+		}
+		String password = EncryptUtils.getInstance().sha(userLoginData.getSalt(),request.getPassword());
+		if(!request.getPassword().equals(password)){
+			throw new BaseException(BaseErrorCodeEnum.DATA_NOT_FOUND,"用户名或密码错误");
+		}
+		return BeanUtils.convert(userLoginData, UserLoginResponse.class);
 	}
 
 	private List<UserLoginResponse> listByConditionData(UserLoginRequest request,int page,int pageSize){
 		int start = page * pageSize;
-		List<UserLoginData> list =  this.userLoginMapperEx.listByCondition(request.getLoginType(), request.getLoginKey(), request.getLoginPassword(), request.getUserId(), request.getIsDeleted(), request.getSalt(), start, pageSize);
+		List<UserLoginData> list =  this.userLoginMapperEx.listByCondition(request.getLoginType(), request.getLoginPassword(), request.getUserId(), start, pageSize);
 		return BeanUtils.convert(list,UserLoginResponse.class);
 	}
 
 
 	private Long countByConditionData(UserLoginRequest request){
-		return this.userLoginMapperEx.countByCondition(request.getLoginType(), request.getLoginKey(), request.getLoginPassword(), request.getUserId(), request.getIsDeleted(), request.getSalt());
+		return this.userLoginMapperEx.countByCondition(request.getLoginType(), request.getLoginKey(), request.getUserId());
 	}
 }

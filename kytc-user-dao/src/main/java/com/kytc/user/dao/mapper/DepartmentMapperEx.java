@@ -7,7 +7,9 @@ import java.util.List;
 
 public interface DepartmentMapperEx extends DepartmentMapper {
 
-	List<DepartmentData> listByCondition(Long parentId, String deptKey, String deptName, String address, String remark, String level, int start, int limit);
+	List<DepartmentData> listByCondition(Long parentId, String deptKey, String deptName, int start, int limit);
 
-	Long countByCondition(Long parentId, String deptKey, String deptName, String address, String remark, String level);
+	Long countByCondition(Long parentId, String deptKey, String deptName);
+
+	DepartmentData getByParentId(Long parentId);
 }

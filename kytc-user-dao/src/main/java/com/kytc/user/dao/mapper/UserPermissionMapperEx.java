@@ -10,4 +10,6 @@ public interface UserPermissionMapperEx extends UserPermissionMapper {
 	List<UserPermissionData> listByCondition(Long userId, Long permissionId, int start, int limit);
 
 	Long countByCondition(Long userId, Long permissionId);
+
+	UserPermissionData getByUserIdAndPermissionId(Long userId,Long permissionId);
 }

@@ -1,6 +1,7 @@
 package com.kytc.user.server.api.impl;
 
 import com.kytc.user.request.DepartmentRequest;
+import com.kytc.user.request.DepartmentSearchRequest;
 import com.kytc.user.response.DepartmentResponse;
 import com.kytc.user.api.DepartmentApi;
 import com.kytc.user.server.service.DepartmentService;
@@ -23,10 +24,8 @@ public class DepartmentApiImpl implements DepartmentApi {
 
 	@Override
 	public BasePageResponse<DepartmentResponse> listByCondition(
-		@RequestBody @Valid DepartmentRequest request,
-		@RequestParam("index")int page,
-		@RequestParam("pageSize")int pageSize){
-			return this.departmentService.listByCondition( request,page, pageSize);
+			@RequestBody @Valid DepartmentSearchRequest request){
+			return this.departmentService.listByCondition( request );
 	}
 
 	@Override

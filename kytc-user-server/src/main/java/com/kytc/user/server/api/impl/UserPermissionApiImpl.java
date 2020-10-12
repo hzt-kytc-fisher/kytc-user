@@ -1,6 +1,7 @@
 package com.kytc.user.server.api.impl;
 
 import com.kytc.user.request.UserPermissionRequest;
+import com.kytc.user.request.UserPermissionSearchRequest;
 import com.kytc.user.response.UserPermissionResponse;
 import com.kytc.user.api.UserPermissionApi;
 import com.kytc.user.server.service.UserPermissionService;
@@ -23,10 +24,8 @@ public class UserPermissionApiImpl implements UserPermissionApi {
 
 	@Override
 	public BasePageResponse<UserPermissionResponse> listByCondition(
-		@RequestBody @Valid UserPermissionRequest request,
-		@RequestParam("index")int page,
-		@RequestParam("pageSize")int pageSize){
-			return this.userPermissionService.listByCondition( request,page, pageSize);
+		@RequestBody @Valid UserPermissionSearchRequest request){
+			return this.userPermissionService.listByCondition( request );
 	}
 
 	@Override
@@ -35,17 +34,7 @@ public class UserPermissionApiImpl implements UserPermissionApi {
 	}
 
 	@Override
-	public boolean update(@RequestBody @Valid UserPermissionRequest request) {
-		return this.userPermissionService.update(request);
-	}
-
-	@Override
 	public boolean delete(@PathVariable("id") Long id) {
 		return this.userPermissionService.delete(id);
-	}
-
-	@Override
-	public UserPermissionResponse detail(@PathVariable("id") Long id) {
-		return this.userPermissionService.detail(id);
 	}
 }

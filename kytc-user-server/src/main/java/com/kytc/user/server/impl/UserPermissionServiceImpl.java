@@ -2,6 +2,7 @@ package com.kytc.user.server.impl;
 
 import com.kytc.framework.web.common.BasePageResponse;
 import com.kytc.framework.web.utils.BeanUtils;
+import com.kytc.user.request.UserPermissionSearchRequest;
 import com.kytc.user.server.service.UserPermissionService;
 import com.kytc.user.request.UserPermissionRequest;
 import com.kytc.user.response.UserPermissionResponse;
@@ -22,32 +23,17 @@ public class UserPermissionServiceImpl implements UserPermissionService {
 
 	@Override
 	public boolean add(UserPermissionRequest request){
-		if( null != request ){
-			UserPermissionData userPermissionData = BeanUtils.convert(request, UserPermissionData.class);
-			userPermissionData.setCreatedAt(new Date());
-			userPermissionData.setUpdatedAt(new Date());
-			return this.userPermissionMapperEx.insert(userPermissionData)>0;
+		if( null == request ){
+			return false;
 		}
-		return false;
-	}
-
-	@Override
-	public boolean update(UserPermissionRequest request){
-		if( null != request ){
-			UserPermissionData userPermissionData = BeanUtils.convert(request, UserPermissionData.class);
-			userPermissionData.setUpdatedAt(new Date());
-			return this.userPermissionMapperEx.updateByPrimaryKey(userPermissionData)>0;
+		UserPermissionData data = this.userPermissionMapperEx.getByUserIdAndPermissionId(request.getUserId(),request.getPermissionId());
+		if( null != data ){
+			return true;
 		}
-		return false;
-	}
-
-	@Override
-	public UserPermissionResponse detail(Long id){
-		UserPermissionData userPermissionData = this.userPermissionMapperEx.selectByPrimaryKey( id );
-		if( null == userPermissionData ){
-			return null;
-		}
-		return BeanUtils.convert(userPermissionData,UserPermissionResponse.class);
+		UserPermissionData userPermissionData = BeanUtils.convert(request, UserPermissionData.class);
+		userPermissionData.setCreatedAt(new Date());
+		userPermissionData.setUpdatedAt(new Date());
+		return this.userPermissionMapperEx.insert(userPermissionData)>0;
 	}
 
 	@Override
@@ -56,23 +42,23 @@ public class UserPermissionServiceImpl implements UserPermissionService {
 	}
 
 	@Override
-	public BasePageResponse<UserPermissionResponse> listByCondition(UserPermissionRequest request,int page, int pageSize){
+	public BasePageResponse<UserPermissionResponse> listByCondition(UserPermissionSearchRequest request){
 		BasePageResponse<UserPermissionResponse> pageResponse = new BasePageResponse<>();
-		pageResponse.setRows(this.listByConditionData(request,page, pageSize));
+		pageResponse.setRows(this.listByConditionData(request));
 		pageResponse.setTotal(this.countByConditionData(request));
-		pageResponse.setPage(page);
-		pageResponse.setPageSize(pageSize);
+		pageResponse.setPage(request.getPage());
+		pageResponse.setPageSize(request.getPageSize());
 		return pageResponse;
 	}
 
-	private List<UserPermissionResponse> listByConditionData(UserPermissionRequest request,int page,int pageSize){
-		int start = page * pageSize;
-		List<UserPermissionData> list =  this.userPermissionMapperEx.listByCondition(request.getUserId(), request.getPermissionId(), start, pageSize);
+	private List<UserPermissionResponse> listByConditionData(UserPermissionSearchRequest request){
+		request.init();
+		List<UserPermissionData> list =  this.userPermissionMapperEx.listByCondition(request.getUserId(), request.getPermissionId(),request.getStart(),request.getLimit());
 		return BeanUtils.convert(list,UserPermissionResponse.class);
 	}
 
 
-	private Long countByConditionData(UserPermissionRequest request){
+	private Long countByConditionData(UserPermissionSearchRequest request){
 		return this.userPermissionMapperEx.countByCondition(request.getUserId(), request.getPermissionId());
 	}
 }

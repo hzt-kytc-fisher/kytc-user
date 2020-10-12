@@ -23,10 +23,8 @@ public class UserLoginApiImpl implements UserLoginApi {
 
 	@Override
 	public BasePageResponse<UserLoginResponse> listByCondition(
-		@RequestBody @Valid UserLoginRequest request,
-		@RequestParam("index")int page,
-		@RequestParam("pageSize")int pageSize){
-			return this.userLoginService.listByCondition( request,page, pageSize);
+		@RequestBody @Valid UserLoginRequest request){
+			return this.userLoginService.listByCondition( request );
 	}
 
 	@Override
@@ -48,4 +46,11 @@ public class UserLoginApiImpl implements UserLoginApi {
 	public UserLoginResponse detail(@PathVariable("id") Long id) {
 		return this.userLoginService.detail(id);
 	}
+
+	@Override
+	public UserLoginResponse login(@Valid UserLoginRequest request) {
+		return null;
+	}
+
+
 }

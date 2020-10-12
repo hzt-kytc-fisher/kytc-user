@@ -7,7 +7,11 @@ import java.util.List;
 
 public interface UserRoleMapperEx extends UserRoleMapper {
 
-	List<UserRoleData> listByCondition(Long userId, Long roleId, int start, int limit);
+	List<UserRoleData> listByCondition(Long id, Long userId, Long roleId, int start, int limit);
 
-	Long countByCondition(Long userId, Long roleId);
+	Long countByCondition(Long id, Long userId, Long roleId);
+
+	Integer deleteByUserIdAndRoleId(Long userId, Long roleId);
+
+	UserRoleData getByUserIdAndRoleId(Long userId, Long roleId);
 }
