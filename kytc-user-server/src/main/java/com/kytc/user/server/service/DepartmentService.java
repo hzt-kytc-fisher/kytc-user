@@ -5,10 +5,12 @@ import com.kytc.user.request.DepartmentSearchRequest;
 import com.kytc.user.response.DepartmentResponse;
 import com.kytc.framework.web.common.BasePageResponse;
 
+import java.util.List;
+
 
 public interface DepartmentService {
 
-	boolean add(DepartmentRequest request);
+	Long add(DepartmentRequest request);
 
 	boolean update(DepartmentRequest request);
 
@@ -18,4 +20,10 @@ public interface DepartmentService {
 
 	BasePageResponse<DepartmentResponse> listByCondition(
 			DepartmentSearchRequest request);
+
+	List<DepartmentResponse> select(Long deptId);
+
+	List<DepartmentResponse> selectByIds(List<Long> ids);
+
+	DepartmentResponse getByDeptKey(String deptKey);
 }

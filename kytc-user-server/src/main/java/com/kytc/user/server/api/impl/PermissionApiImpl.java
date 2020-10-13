@@ -1,6 +1,7 @@
 package com.kytc.user.server.api.impl;
 
 import com.kytc.user.request.PermissionRequest;
+import com.kytc.user.request.PermissionSearchRequest;
 import com.kytc.user.response.PermissionResponse;
 import com.kytc.user.api.PermissionApi;
 import com.kytc.user.server.service.PermissionService;
@@ -23,14 +24,12 @@ public class PermissionApiImpl implements PermissionApi {
 
 	@Override
 	public BasePageResponse<PermissionResponse> listByCondition(
-		@RequestBody @Valid PermissionRequest request,
-		@RequestParam("index")int page,
-		@RequestParam("pageSize")int pageSize){
-			return this.permissionService.listByCondition( request,page, pageSize);
+		@RequestBody @Valid PermissionSearchRequest request){
+			return this.permissionService.listByCondition( request );
 	}
 
 	@Override
-	public boolean add(@RequestBody @Valid PermissionRequest request) {
+	public Long add(@RequestBody @Valid PermissionRequest request) {
 		return this.permissionService.add(request);
 	}
 

@@ -2,6 +2,7 @@ package com.kytc.user.server.api.impl;
 
 import com.kytc.user.request.UserRoleRequest;
 import com.kytc.user.request.UserRoleSearchRequest;
+import com.kytc.user.response.RoleResponse;
 import com.kytc.user.response.UserRoleResponse;
 import com.kytc.user.api.UserRoleApi;
 import com.kytc.user.server.service.UserRoleService;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.List;
 
 
 @RestController
@@ -34,18 +36,13 @@ public class UserRoleApiImpl implements UserRoleApi {
 	}
 
 	@Override
-	public boolean update(@RequestBody @Valid UserRoleRequest request) {
-		return this.userRoleService.update(request);
-	}
-
-	@Override
 	public boolean delete(@PathVariable("id") Long id) {
 		return this.userRoleService.delete(id);
 	}
 
 	@Override
-	public UserRoleResponse detail(@PathVariable("id") Long id) {
-		return this.userRoleService.detail(id);
+	public List<RoleResponse> selectByUserId(@PathVariable("userId") Long userId) {
+		return this.userRoleService.selectByUserId(userId);
 	}
 
 	@Override

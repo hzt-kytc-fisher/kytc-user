@@ -1,6 +1,7 @@
 package com.kytc.user.server.api.impl;
 
 import com.kytc.user.request.RoleRequest;
+import com.kytc.user.request.RoleSearchRequest;
 import com.kytc.user.response.RoleResponse;
 import com.kytc.user.api.RoleApi;
 import com.kytc.user.server.service.RoleService;
@@ -23,14 +24,12 @@ public class RoleApiImpl implements RoleApi {
 
 	@Override
 	public BasePageResponse<RoleResponse> listByCondition(
-		@RequestBody @Valid RoleRequest request,
-		@RequestParam("index")int page,
-		@RequestParam("pageSize")int pageSize){
-			return this.roleService.listByCondition( request,page, pageSize);
+		@RequestBody @Valid RoleSearchRequest request){
+			return this.roleService.listByCondition( request );
 	}
 
 	@Override
-	public boolean add(@RequestBody @Valid RoleRequest request) {
+	public Long add(@RequestBody @Valid RoleRequest request) {
 		return this.roleService.add(request);
 	}
 

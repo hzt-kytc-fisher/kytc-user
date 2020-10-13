@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface PermissionMapperEx extends PermissionMapper {
 
-	List<PermissionData> listByCondition(Long parentId, String permissionKey, String permissionName, String url, String level, String description, Boolean idDeleted, int start, int limit);
+	List<PermissionData> listByCondition(Long parentId, String permissionKey, String permissionName, String url, String level, String description, int start, int limit);
 
-	Long countByCondition(Long parentId, String permissionKey, String permissionName, String url, String level, String description, Boolean idDeleted);
+	Long countByCondition(Long parentId, String permissionKey, String permissionName, String url, String level, String description);
 }

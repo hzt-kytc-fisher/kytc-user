@@ -7,7 +7,9 @@ import java.util.List;
 
 public interface RoleMapperEx extends RoleMapper {
 
-	List<RoleData> listByCondition(Long parentId, String roleKey, String roleName, Boolean isDeleted, String level, String description, int start, int limit);
+	List<RoleData> listByCondition(Long parentId, String roleKey, String roleName, String level, String description, int start, int limit);
 
-	Long countByCondition(Long parentId, String roleKey, String roleName, Boolean isDeleted, String level, String description);
+	Long countByCondition(Long parentId, String roleKey, String roleName, String level, String description);
+
+	List<RoleData> selectByLevel(String level);
 }

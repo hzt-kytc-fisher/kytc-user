@@ -1,6 +1,7 @@
 package com.kytc.user.api;
 
 import com.kytc.user.request.RoleRequest;
+import com.kytc.user.request.RoleSearchRequest;
 import com.kytc.user.response.RoleResponse;
 
 import com.kytc.framework.web.common.BasePageResponse;
@@ -17,13 +18,11 @@ public interface RoleApi {
 	@ApiOperation("查询角色信息列表")
 	@PostMapping("/infos")
 	BasePageResponse<RoleResponse> listByCondition(
-            @RequestBody RoleRequest request,
-            @RequestParam("page") int page,
-            @RequestParam("pageSize") int pageSize);
+            @RequestBody RoleSearchRequest request);
 
 	@ApiOperation("添加角色信息数据")
 	@PostMapping("/info")
-	boolean add(@RequestBody @Valid RoleRequest request);
+	Long add(@RequestBody @Valid RoleRequest request);
 
 	@ApiOperation("修改角色信息数据")
 	@PutMapping("/info")

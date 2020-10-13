@@ -23,7 +23,7 @@
 		delete from t_user_permission
 		where id = #{id,jdbcType=BIGINT}
 	</delete>
-	<insert id="insert" parameterType="com.kytc.user.dao.data.UserPermissionData">
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.kytc.user.dao.data.UserPermissionData">
 		insert into t_user_permission (
 			id,user_id,permission_id,created_by,created_at,updated_by,updated_at
 		) 
@@ -31,7 +31,7 @@
 			#{id,jdbcType=BIGINT},#{userId,jdbcType=BIGINT},#{permissionId,jdbcType=BIGINT},#{createdBy,jdbcType=VARCHAR},#{createdAt,jdbcType=TIMESTAMP},#{updatedBy,jdbcType=VARCHAR},#{updatedAt,jdbcType=TIMESTAMP}
 		)
 	</insert>
-	<insert id="insertSelective" parameterType="com.kytc.user.dao.data.UserPermissionData">
+	<insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.kytc.user.dao.data.UserPermissionData">
 		insert into t_user_permission
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null">

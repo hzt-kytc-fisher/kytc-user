@@ -10,4 +10,6 @@ public interface UserExtendMapperEx extends UserExtendMapper {
 	List<UserExtendData> listByCondition(Long userId, Long deptId, int start, int limit);
 
 	Long countByCondition(Long userId, Long deptId);
+
+	UserExtendData getByUserId(Long userId);
 }

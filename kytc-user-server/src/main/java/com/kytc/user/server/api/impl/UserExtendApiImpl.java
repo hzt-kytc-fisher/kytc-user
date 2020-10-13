@@ -1,6 +1,7 @@
 package com.kytc.user.server.api.impl;
 
 import com.kytc.user.request.UserExtendRequest;
+import com.kytc.user.request.UserExtendSearchRequest;
 import com.kytc.user.response.UserExtendResponse;
 import com.kytc.user.api.UserExtendApi;
 import com.kytc.user.server.service.UserExtendService;
@@ -23,10 +24,8 @@ public class UserExtendApiImpl implements UserExtendApi {
 
 	@Override
 	public BasePageResponse<UserExtendResponse> listByCondition(
-		@RequestBody @Valid UserExtendRequest request,
-		@RequestParam("index")int page,
-		@RequestParam("pageSize")int pageSize){
-			return this.userExtendService.listByCondition( request,page, pageSize);
+		@RequestBody @Valid UserExtendSearchRequest request ){
+			return this.userExtendService.listByCondition( request );
 	}
 
 	@Override

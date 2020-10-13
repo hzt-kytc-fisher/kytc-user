@@ -34,4 +34,21 @@
 		from t_department
 		where parent_id = #{parentId,jdbcType=BIGINT}
 	</select>
+	<select id="selectByIds" resultMap="com.kytc.user.dao.mapper.DepartmentMapper.BaseResultMap">
+		select
+		<include refid="com.kytc.user.dao.mapper.DepartmentMapper.Base_Column_List"></include>
+		from t_department
+		where id in (
+			<foreach collection="list" item="item" separator=",">
+				#{item,jdbcType=BIGINT}
+			</foreach>
+		)
+	</select>
+	<select id="getByDeptKey" resultMap="com.kytc.user.dao.mapper.DepartmentMapper.BaseResultMap">
+		select
+		<include refid="com.kytc.user.dao.mapper.DepartmentMapper.Base_Column_List"></include>
+		from t_department
+		where dept_key = #{deptKey,jdbcType=VARCHAR}
+		limit 1
+	</select>
 </mapper>

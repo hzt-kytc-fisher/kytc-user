@@ -43,4 +43,14 @@
 		AND role_id = #{roleId,jdbcType=BIGINT} 
 		limit 1
 	</select>
+	<select id="selectByUserId" resultMap="com.kytc.user.dao.mapper.RoleMapper.BaseResultMap">
+		select
+			role.*
+		from
+			t_role role
+		left join
+			t_user_role ur
+		on role.id = ur.role_id
+		where ur.user_id = #{userId,jdbcType=BIGINT}
+	</select>
 </mapper>

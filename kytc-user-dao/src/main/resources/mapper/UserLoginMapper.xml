@@ -27,7 +27,7 @@
 		delete from t_user_login
 		where id = #{id,jdbcType=BIGINT}
 	</delete>
-	<insert id="insert" parameterType="com.kytc.user.dao.data.UserLoginData">
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.kytc.user.dao.data.UserLoginData">
 		insert into t_user_login (
 			id,login_type,login_key,login_password,user_id,is_deleted,salt,created_by,created_at,updated_by,updated_at
 		) 
@@ -35,7 +35,7 @@
 			#{id,jdbcType=BIGINT},#{loginType,jdbcType=VARCHAR},#{loginKey,jdbcType=VARCHAR},#{loginPassword,jdbcType=VARCHAR},#{userId,jdbcType=BIGINT},#{isDeleted,jdbcType=BIT},#{salt,jdbcType=VARCHAR},#{createdBy,jdbcType=VARCHAR},#{createdAt,jdbcType=TIMESTAMP},#{updatedBy,jdbcType=VARCHAR},#{updatedAt,jdbcType=TIMESTAMP}
 		)
 	</insert>
-	<insert id="insertSelective" parameterType="com.kytc.user.dao.data.UserLoginData">
+	<insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.kytc.user.dao.data.UserLoginData">
 		insert into t_user_login
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null">

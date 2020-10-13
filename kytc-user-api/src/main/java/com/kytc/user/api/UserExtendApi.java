@@ -1,6 +1,7 @@
 package com.kytc.user.api;
 
 import com.kytc.user.request.UserExtendRequest;
+import com.kytc.user.request.UserExtendSearchRequest;
 import com.kytc.user.response.UserExtendResponse;
 
 import com.kytc.framework.web.common.BasePageResponse;
@@ -17,9 +18,7 @@ public interface UserExtendApi {
 	@ApiOperation("查询用户扩展信息列表")
 	@PostMapping("/infos")
 	BasePageResponse<UserExtendResponse> listByCondition(
-            @RequestBody UserExtendRequest request,
-            @RequestParam("page") int page,
-            @RequestParam("pageSize") int pageSize);
+            @RequestBody UserExtendSearchRequest request);
 
 	@ApiOperation("添加用户扩展信息数据")
 	@PostMapping("/info")

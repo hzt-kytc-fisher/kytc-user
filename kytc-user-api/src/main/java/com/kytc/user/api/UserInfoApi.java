@@ -1,6 +1,7 @@
 package com.kytc.user.api;
 
 import com.kytc.user.request.UserInfoRequest;
+import com.kytc.user.request.UserInfoSearchRequest;
 import com.kytc.user.response.UserInfoResponse;
 
 import com.kytc.framework.web.common.BasePageResponse;
@@ -17,11 +18,11 @@ public interface UserInfoApi {
 	@ApiOperation("查询用户基本信息列表")
 	@PostMapping("/infos")
 	BasePageResponse<UserInfoResponse> listByCondition(
-            @RequestBody UserInfoRequest request);
+            @RequestBody UserInfoSearchRequest request);
 
 	@ApiOperation("添加用户基本信息数据")
 	@PostMapping("/info")
-	boolean add(@RequestBody @Valid UserInfoRequest request);
+	Long add(@RequestBody @Valid UserInfoRequest request);
 
 	@ApiOperation("修改用户基本信息数据")
 	@PutMapping("/info")

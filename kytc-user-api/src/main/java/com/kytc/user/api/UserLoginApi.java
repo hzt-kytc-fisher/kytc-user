@@ -1,9 +1,12 @@
 package com.kytc.user.api;
 
+import com.kytc.user.request.LoginRequest;
 import com.kytc.user.request.UserLoginRequest;
+import com.kytc.user.request.UserLoginSearchRequest;
 import com.kytc.user.response.UserLoginResponse;
 
 import com.kytc.framework.web.common.BasePageResponse;
+import com.kytc.user.response.UserResponse;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -17,7 +20,7 @@ public interface UserLoginApi {
 	@ApiOperation("查询用户登录信息列表")
 	@PostMapping("/infos")
 	BasePageResponse<UserLoginResponse> listByCondition(
-            @RequestBody UserLoginRequest request);
+            @RequestBody UserLoginSearchRequest request);
 
 	@ApiOperation("添加用户登录信息数据")
 	@PostMapping("/info")
@@ -36,6 +39,6 @@ public interface UserLoginApi {
 	UserLoginResponse detail(@PathVariable("id") Long id);
 
 	@ApiOperation("登录")
-	@GetMapping("/info")
-	UserLoginResponse login(@RequestBody @Valid UserLoginRequest request);
+	@PostMapping("")
+	UserResponse login(@RequestBody @Valid LoginRequest request);
 }

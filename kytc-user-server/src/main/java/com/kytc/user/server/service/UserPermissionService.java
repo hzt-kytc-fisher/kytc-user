@@ -2,8 +2,11 @@ package com.kytc.user.server.service;
 
 import com.kytc.user.request.UserPermissionRequest;
 import com.kytc.user.request.UserPermissionSearchRequest;
+import com.kytc.user.response.PermissionResponse;
 import com.kytc.user.response.UserPermissionResponse;
 import com.kytc.framework.web.common.BasePageResponse;
+
+import java.util.List;
 
 
 public interface UserPermissionService {
@@ -14,4 +17,10 @@ public interface UserPermissionService {
 
 	BasePageResponse<UserPermissionResponse> listByCondition(
 		UserPermissionSearchRequest request);
+
+	List<PermissionResponse> selectByUserId(Long userId);
+
+	List<PermissionResponse> selectByUserIdAll(Long userId);
+
+	long countByPermissionId(Long permissionId);
 }

@@ -1,6 +1,7 @@
 package com.kytc.user.dao.mapper;
 
 
+import com.kytc.framework.database.DataSource;
 import com.kytc.user.dao.data.UserLoginData;
 
 import java.util.List;
@@ -28,5 +29,8 @@ public interface UserLoginMapperEx extends UserLoginMapper {
 
 	Long countByCondition(String loginType, String loginKey, Long userId);
 
+	@DataSource("master")
 	UserLoginData getByLoginTypeAndKey(String loginType,String loginKey);
+
+	List<UserLoginData> selectByUserId(Long userId);
 }

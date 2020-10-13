@@ -23,13 +23,12 @@ public class DepartmentApiImpl implements DepartmentApi {
 	private final DepartmentService departmentService;
 
 	@Override
-	public BasePageResponse<DepartmentResponse> listByCondition(
-			@RequestBody @Valid DepartmentSearchRequest request){
+	public BasePageResponse<DepartmentResponse> listByCondition(@RequestBody @Valid DepartmentSearchRequest request){
 			return this.departmentService.listByCondition( request );
 	}
 
 	@Override
-	public boolean add(@RequestBody @Valid DepartmentRequest request) {
+	public Long add(@RequestBody @Valid DepartmentRequest request) {
 		return this.departmentService.add(request);
 	}
 

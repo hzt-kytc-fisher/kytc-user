@@ -1,6 +1,7 @@
 package com.kytc.user.api;
 
 import com.kytc.user.request.PermissionRequest;
+import com.kytc.user.request.PermissionSearchRequest;
 import com.kytc.user.response.PermissionResponse;
 
 import com.kytc.framework.web.common.BasePageResponse;
@@ -16,14 +17,11 @@ public interface PermissionApi {
 
 	@ApiOperation("查询权限信息列表")
 	@PostMapping("/infos")
-	BasePageResponse<PermissionResponse> listByCondition(
-            @RequestBody PermissionRequest request,
-            @RequestParam("page") int page,
-            @RequestParam("pageSize") int pageSize);
+	BasePageResponse<PermissionResponse> listByCondition(@RequestBody @Valid PermissionSearchRequest request);
 
 	@ApiOperation("添加权限信息数据")
 	@PostMapping("/info")
-	boolean add(@RequestBody @Valid PermissionRequest request);
+	Long add(@RequestBody @Valid PermissionRequest request);
 
 	@ApiOperation("修改权限信息数据")
 	@PutMapping("/info")

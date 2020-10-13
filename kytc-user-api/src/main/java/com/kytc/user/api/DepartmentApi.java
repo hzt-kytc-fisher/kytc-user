@@ -17,12 +17,11 @@ public interface DepartmentApi {
 
 	@ApiOperation("查询部门信息列表")
 	@PostMapping("/infos")
-	BasePageResponse<DepartmentResponse> listByCondition(
-            @RequestBody DepartmentSearchRequest request);
+	BasePageResponse<DepartmentResponse> listByCondition(@RequestBody DepartmentSearchRequest request);
 
 	@ApiOperation("添加部门信息数据")
 	@PostMapping("/info")
-	boolean add(@RequestBody @Valid DepartmentRequest request);
+	Long add(@RequestBody @Valid DepartmentRequest request);
 
 	@ApiOperation("修改部门信息数据")
 	@PutMapping("/info")

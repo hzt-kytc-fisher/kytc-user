@@ -1,6 +1,7 @@
 package com.kytc.user.server.api.impl;
 
 import com.kytc.user.request.UserInfoRequest;
+import com.kytc.user.request.UserInfoSearchRequest;
 import com.kytc.user.response.UserInfoResponse;
 import com.kytc.user.api.UserInfoApi;
 import com.kytc.user.server.service.UserInfoService;
@@ -23,12 +24,12 @@ public class UserInfoApiImpl implements UserInfoApi {
 
 	@Override
 	public BasePageResponse<UserInfoResponse> listByCondition(
-		@RequestBody @Valid UserInfoRequest request){
-			return this.userInfoService.listByCondition( request,request.getPage(), request.getPageSize());
+		@RequestBody @Valid UserInfoSearchRequest request){
+			return this.userInfoService.listByCondition( request );
 	}
 
 	@Override
-	public boolean add(@RequestBody @Valid UserInfoRequest request) {
+	public Long add(@RequestBody @Valid UserInfoRequest request) {
 		return this.userInfoService.add(request);
 	}
 

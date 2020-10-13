@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @ApiModel("部门信息 response")
@@ -35,4 +36,5 @@ public class DepartmentResponse implements Serializable {
 	private Date updatedAt;
 	@ApiModelProperty("最后更新时间")
 	private Date lastUpdatedAt;
+	private List<DepartmentResponse> children;
 }

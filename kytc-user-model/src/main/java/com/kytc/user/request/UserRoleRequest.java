@@ -15,7 +15,6 @@ public class UserRoleRequest implements Serializable {
 	@ApiModelProperty("主键")
 	private Long id;
 	@ApiModelProperty("用户ID")
-	@NotNull
 	private Long userId;
 	@ApiModelProperty("角色ID")
 	private Long roleId;

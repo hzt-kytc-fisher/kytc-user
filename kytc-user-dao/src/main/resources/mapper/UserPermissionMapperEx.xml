@@ -35,4 +35,14 @@
 			user_id = #{userId,jdbcType=BIGINT}
 		and permission_id = #{permissionId,jdbcType=BIGINT}
 	</select>
+	<select id="selectByUserId" resultMap="com.kytc.user.dao.mapper.PermissionMapper.BaseResultMap">
+		select
+			permission.*
+		from
+			t_permission permission
+		left join
+			t_user_permission up
+		on permission.id = up.permission_id
+		where up.user_id = #{userId,jdbcType=BIGINT}
+	</select>
 </mapper>

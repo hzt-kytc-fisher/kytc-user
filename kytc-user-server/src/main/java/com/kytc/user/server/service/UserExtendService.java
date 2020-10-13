@@ -1,6 +1,7 @@
 package com.kytc.user.server.service;
 
 import com.kytc.user.request.UserExtendRequest;
+import com.kytc.user.request.UserExtendSearchRequest;
 import com.kytc.user.response.UserExtendResponse;
 import com.kytc.framework.web.common.BasePageResponse;
 
@@ -16,7 +17,7 @@ public interface UserExtendService {
 	boolean delete(Long id);
 
 	BasePageResponse<UserExtendResponse> listByCondition(
-		UserExtendRequest request,
-		int page,
-		int pageSize);
+		UserExtendSearchRequest request);
+
+	UserExtendResponse getByUserId(Long userId);
 }

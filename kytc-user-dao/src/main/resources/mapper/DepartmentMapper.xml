@@ -27,7 +27,7 @@
 		delete from t_department
 		where id = #{id,jdbcType=BIGINT}
 	</delete>
-	<insert id="insert" parameterType="com.kytc.user.dao.data.DepartmentData">
+	<insert id="insert" useGeneratedKeys="true"  keyProperty="id" parameterType="com.kytc.user.dao.data.DepartmentData">
 		insert into t_department (
 			id,parent_id,dept_key,dept_name,address,remark,level,created_by,created_at,updated_by,updated_at
 		) 
@@ -35,7 +35,7 @@
 			#{id,jdbcType=BIGINT},#{parentId,jdbcType=BIGINT},#{deptKey,jdbcType=VARCHAR},#{deptName,jdbcType=VARCHAR},#{address,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR},#{level,jdbcType=VARCHAR},#{createdBy,jdbcType=VARCHAR},#{createdAt,jdbcType=TIMESTAMP},#{updatedBy,jdbcType=VARCHAR},#{updatedAt,jdbcType=TIMESTAMP}
 		)
 	</insert>
-	<insert id="insertSelective" parameterType="com.kytc.user.dao.data.DepartmentData">
+	<insert id="insertSelective" useGeneratedKeys="true"  keyProperty="id" parameterType="com.kytc.user.dao.data.DepartmentData">
 		insert into t_department
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null">

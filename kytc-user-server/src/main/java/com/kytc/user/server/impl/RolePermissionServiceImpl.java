@@ -2,6 +2,9 @@ package com.kytc.user.server.impl;
 
 import com.kytc.framework.web.common.BasePageResponse;
 import com.kytc.framework.web.utils.BeanUtils;
+import com.kytc.user.dao.data.PermissionData;
+import com.kytc.user.request.RolePermissionSearchRequest;
+import com.kytc.user.response.PermissionResponse;
 import com.kytc.user.server.service.RolePermissionService;
 import com.kytc.user.request.RolePermissionRequest;
 import com.kytc.user.response.RolePermissionResponse;
@@ -10,6 +13,7 @@ import com.kytc.user.dao.mapper.RolePermissionMapperEx;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -22,32 +26,10 @@ public class RolePermissionServiceImpl implements RolePermissionService {
 
 	@Override
 	public boolean add(RolePermissionRequest request){
-		if( null != request ){
-			RolePermissionData rolePermissionData = BeanUtils.convert(request, RolePermissionData.class);
-			rolePermissionData.setCreatedAt(new Date());
-			rolePermissionData.setUpdatedAt(new Date());
-			return this.rolePermissionMapperEx.insert(rolePermissionData)>0;
-		}
-		return false;
-	}
-
-	@Override
-	public boolean update(RolePermissionRequest request){
-		if( null != request ){
-			RolePermissionData rolePermissionData = BeanUtils.convert(request, RolePermissionData.class);
-			rolePermissionData.setUpdatedAt(new Date());
-			return this.rolePermissionMapperEx.updateByPrimaryKey(rolePermissionData)>0;
-		}
-		return false;
-	}
-
-	@Override
-	public RolePermissionResponse detail(Long id){
-		RolePermissionData rolePermissionData = this.rolePermissionMapperEx.selectByPrimaryKey( id );
-		if( null == rolePermissionData ){
-			return null;
-		}
-		return BeanUtils.convert(rolePermissionData,RolePermissionResponse.class);
+		RolePermissionData rolePermissionData = BeanUtils.convert(request, RolePermissionData.class);
+		rolePermissionData.setCreatedAt(new Date());
+		rolePermissionData.setUpdatedAt(new Date());
+		return this.rolePermissionMapperEx.insert(rolePermissionData)>0;
 	}
 
 	@Override
@@ -56,23 +38,51 @@ public class RolePermissionServiceImpl implements RolePermissionService {
 	}
 
 	@Override
-	public BasePageResponse<RolePermissionResponse> listByCondition(RolePermissionRequest request,int page, int pageSize){
+	public BasePageResponse<RolePermissionResponse> listByCondition(RolePermissionSearchRequest request){
 		BasePageResponse<RolePermissionResponse> pageResponse = new BasePageResponse<>();
-		pageResponse.setRows(this.listByConditionData(request,page, pageSize));
+		pageResponse.setRows(this.listByConditionData(request));
 		pageResponse.setTotal(this.countByConditionData(request));
-		pageResponse.setPage(page);
-		pageResponse.setPageSize(pageSize);
+		pageResponse.setPage(request.getPage());
+		pageResponse.setPageSize(request.getPageSize());
 		return pageResponse;
 	}
 
-	private List<RolePermissionResponse> listByConditionData(RolePermissionRequest request,int page,int pageSize){
-		int start = page * pageSize;
-		List<RolePermissionData> list =  this.rolePermissionMapperEx.listByCondition(request.getRoleId(), request.getPermissionId(), start, pageSize);
+	@Override
+	public List<PermissionResponse> selectByRoleId(Long roleId) {
+		List<PermissionData> list = this.rolePermissionMapperEx.selectByRoleId(roleId);
+		if(CollectionUtils.isEmpty(list)){
+			return null;
+		}
+		return BeanUtils.convert(list,PermissionResponse.class);
+	}
+
+	@Override
+	public List<PermissionResponse> selectByRoleIds(List<Long> roleIds) {
+		List<PermissionData> list = this.rolePermissionMapperEx.selectByRoleIds(roleIds);
+		if(CollectionUtils.isEmpty(list)){
+			return null;
+		}
+		return BeanUtils.convert(list,PermissionResponse.class);
+	}
+
+	@Override
+	public long countByPermissionId(Long permissionId) {
+		RolePermissionSearchRequest request = new RolePermissionSearchRequest();
+		request.setPermissionId(permissionId);
+		return this.countByConditionData(request);
+	}
+
+	private List<RolePermissionResponse> listByConditionData(RolePermissionSearchRequest request){
+		request.init();
+		List<RolePermissionData> list =  this.rolePermissionMapperEx.listByCondition(request.getRoleId(), request.getPermissionId(),
+				request.getStart(), request.getLimit());
 		return BeanUtils.convert(list,RolePermissionResponse.class);
 	}
 
 
-	private Long countByConditionData(RolePermissionRequest request){
+	private Long countByConditionData(RolePermissionSearchRequest request){
 		return this.rolePermissionMapperEx.countByCondition(request.getRoleId(), request.getPermissionId());
 	}
+
+
 }

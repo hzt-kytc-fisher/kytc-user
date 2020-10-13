@@ -1,6 +1,7 @@
 package com.kytc.user.dao.mapper;
 
 
+import com.kytc.user.dao.data.RoleData;
 import com.kytc.user.dao.data.UserRoleData;
 
 import java.util.List;
@@ -14,4 +15,6 @@ public interface UserRoleMapperEx extends UserRoleMapper {
 	Integer deleteByUserIdAndRoleId(Long userId, Long roleId);
 
 	UserRoleData getByUserIdAndRoleId(Long userId, Long roleId);
+
+	List<RoleData> selectByUserId(Long userId);
 }

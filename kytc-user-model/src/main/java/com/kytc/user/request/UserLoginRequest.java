@@ -10,7 +10,7 @@ import java.util.Date;
 
 @Data
 @ApiModel("用户登录信息 request")
-public class UserLoginRequest extends BasePageRequest implements Serializable {
+public class UserLoginRequest implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@ApiModelProperty("主键")
 	private Long id;

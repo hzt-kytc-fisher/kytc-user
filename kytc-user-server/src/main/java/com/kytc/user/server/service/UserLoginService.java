@@ -2,8 +2,12 @@ package com.kytc.user.server.service;
 
 import com.kytc.user.request.LoginRequest;
 import com.kytc.user.request.UserLoginRequest;
+import com.kytc.user.request.UserLoginSearchRequest;
 import com.kytc.user.response.UserLoginResponse;
 import com.kytc.framework.web.common.BasePageResponse;
+import com.kytc.user.response.UserResponse;
+
+import java.util.List;
 
 
 public interface UserLoginService {
@@ -17,7 +21,9 @@ public interface UserLoginService {
 	boolean delete(Long id);
 
 	BasePageResponse<UserLoginResponse> listByCondition(
-		UserLoginRequest request);
+			UserLoginSearchRequest request);
 
-	UserLoginResponse login(LoginRequest request);
+	UserResponse login(LoginRequest request);
+
+	List<UserLoginResponse> selectByUserId(Long userId);
 }

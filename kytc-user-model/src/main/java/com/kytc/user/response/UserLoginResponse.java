@@ -31,4 +31,5 @@ public class UserLoginResponse implements Serializable {
 	private Date updatedAt;
 	@ApiModelProperty("最后更新时间")
 	private Date lastUpdatedAt;
+	private Boolean isCurrentLogin;
 }

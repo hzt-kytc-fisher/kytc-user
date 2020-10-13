@@ -12,9 +12,6 @@
 			<if test="roleName != null ">
 				and role_name = #{roleName,jdbcType=VARCHAR}
 			</if>
-			<if test="isDeleted != null ">
-				and is_deleted = #{isDeleted,jdbcType=BIT}
-			</if>
 			<if test="level != null ">
 				and level = #{level,jdbcType=VARCHAR}
 			</if>
@@ -37,5 +34,12 @@
 			count(1)
 		from t_role
 		<include refid="queryCondition"></include>
+	</select>
+	<select id="selectByLevel" resultMap="com.kytc.user.dao.mapper.RoleMapper.BaseResultMap">
+		select
+		<include refid="com.kytc.user.dao.mapper.RoleMapper.Base_Column_List"></include>
+		from t_role
+		where level like concat(#{level,jdbcType=VARBINARY},'-','%')
+		order by id asc
 	</select>
 </mapper>

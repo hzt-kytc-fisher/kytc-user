@@ -1,13 +1,16 @@
 package com.kytc.user.server.service;
 
 import com.kytc.user.request.RoleRequest;
+import com.kytc.user.request.RoleSearchRequest;
 import com.kytc.user.response.RoleResponse;
 import com.kytc.framework.web.common.BasePageResponse;
+
+import java.util.List;
 
 
 public interface RoleService {
 
-	boolean add(RoleRequest request);
+	Long add(RoleRequest request);
 
 	boolean update(RoleRequest request);
 
@@ -16,7 +19,7 @@ public interface RoleService {
 	boolean delete(Long id);
 
 	BasePageResponse<RoleResponse> listByCondition(
-		RoleRequest request,
-		int page,
-		int pageSize);
+			RoleSearchRequest request);
+
+	List<RoleResponse> selectByLevel(String level);
 }

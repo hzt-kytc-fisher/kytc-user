@@ -1,6 +1,8 @@
 package com.kytc.user.server.api.impl;
 
 import com.kytc.user.request.RolePermissionRequest;
+import com.kytc.user.request.RolePermissionSearchRequest;
+import com.kytc.user.response.PermissionResponse;
 import com.kytc.user.response.RolePermissionResponse;
 import com.kytc.user.api.RolePermissionApi;
 import com.kytc.user.server.service.RolePermissionService;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.List;
 
 
 @RestController
@@ -23,10 +26,8 @@ public class RolePermissionApiImpl implements RolePermissionApi {
 
 	@Override
 	public BasePageResponse<RolePermissionResponse> listByCondition(
-		@RequestBody @Valid RolePermissionRequest request,
-		@RequestParam("index")int page,
-		@RequestParam("pageSize")int pageSize){
-			return this.rolePermissionService.listByCondition( request,page, pageSize);
+			@RequestBody @Valid RolePermissionSearchRequest request){
+			return this.rolePermissionService.listByCondition( request );
 	}
 
 	@Override
@@ -35,17 +36,12 @@ public class RolePermissionApiImpl implements RolePermissionApi {
 	}
 
 	@Override
-	public boolean update(@RequestBody @Valid RolePermissionRequest request) {
-		return this.rolePermissionService.update(request);
-	}
-
-	@Override
 	public boolean delete(@PathVariable("id") Long id) {
 		return this.rolePermissionService.delete(id);
 	}
 
 	@Override
-	public RolePermissionResponse detail(@PathVariable("id") Long id) {
-		return this.rolePermissionService.detail(id);
+	public List<PermissionResponse> selectByRoleId(@PathVariable("roleId") Long roleId) {
+		return this.rolePermissionService.selectByRoleId(roleId);
 	}
 }

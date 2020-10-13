@@ -1,29 +1,31 @@
 package com.kytc.user.server.api.impl;
 
+import com.kytc.user.request.LoginRequest;
 import com.kytc.user.request.UserLoginRequest;
+import com.kytc.user.request.UserLoginSearchRequest;
 import com.kytc.user.response.UserLoginResponse;
 import com.kytc.user.api.UserLoginApi;
+import com.kytc.user.response.UserResponse;
 import com.kytc.user.server.service.UserLoginService;
 import com.kytc.framework.web.common.BasePageResponse;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 
 @RestController
 @RequiredArgsConstructor(onConstructor_={@Autowired})
+@Slf4j
 public class UserLoginApiImpl implements UserLoginApi {
 	private final UserLoginService userLoginService;
 
 	@Override
 	public BasePageResponse<UserLoginResponse> listByCondition(
-		@RequestBody @Valid UserLoginRequest request){
+		@RequestBody @Valid UserLoginSearchRequest request){
 			return this.userLoginService.listByCondition( request );
 	}
 
@@ -48,9 +50,9 @@ public class UserLoginApiImpl implements UserLoginApi {
 	}
 
 	@Override
-	public UserLoginResponse login(@Valid UserLoginRequest request) {
-		return null;
+	@RequestMapping
+	public UserResponse login(@Valid LoginRequest request) {
+		log.info("user login,loginKey:{},loginType:{}",request.getLoginKey(),request.getLoginTypeEnum());
+		return this.userLoginService.login(request);
 	}
-
-
 }

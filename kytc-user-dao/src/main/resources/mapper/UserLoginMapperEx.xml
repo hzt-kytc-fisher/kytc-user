@@ -38,4 +38,11 @@
 		and is_deleted = 0
 		limit 1
 	</select>
+	<select id="selectByUserId" resultMap="com.kytc.user.dao.mapper.UserLoginMapper.BaseResultMap">
+		select
+		<include refid="com.kytc.user.dao.mapper.UserLoginMapper.Base_Column_List"></include>
+		from t_user_login
+		where user_id = #{userId,jdbcType=BIGINT}
+		and is_deleted = 0
+	</select>
 </mapper>

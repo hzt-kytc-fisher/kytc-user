@@ -21,9 +21,7 @@
 			<if test="description != null ">
 				and description = #{description,jdbcType=VARCHAR}
 			</if>
-			<if test="idDeleted != null ">
-				and id_deleted = #{idDeleted,jdbcType=BIT}
-			</if>
+			and is_deleted = 0
 		</where>
 	</sql>
 	<select id="listByCondition" resultMap="com.kytc.user.dao.mapper.PermissionMapper.BaseResultMap">

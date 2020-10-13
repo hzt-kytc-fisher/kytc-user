@@ -1,9 +1,12 @@
 package com.kytc.user.server.impl;
 
+import com.kytc.framework.cache.aop.RedisCache;
 import com.kytc.framework.exception.BaseErrorCodeEnum;
 import com.kytc.framework.exception.BaseException;
 import com.kytc.framework.web.common.BasePageResponse;
 import com.kytc.framework.web.utils.BeanUtils;
+import com.kytc.user.dao.data.RoleData;
+import com.kytc.user.response.RoleResponse;
 import com.kytc.user.server.service.UserRoleService;
 import com.kytc.user.request.UserRoleRequest;
 import com.kytc.user.request.UserRoleSearchRequest;
@@ -13,6 +16,7 @@ import com.kytc.user.dao.mapper.UserRoleMapperEx;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -36,22 +40,13 @@ public class UserRoleServiceImpl implements UserRoleService {
 	}
 
 	@Override
-	public boolean update(UserRoleRequest request){
-		if( null != request ){
-			UserRoleData userRoleData = BeanUtils.convert(request, UserRoleData.class);
-			userRoleData.setUpdatedAt(new Date());
-			return this.userRoleMapperEx.updateByPrimaryKey(userRoleData)>0;
-		}
-		return false;
-	}
-
-	@Override
-	public UserRoleResponse detail(Long id){
-		UserRoleData userRoleData = this.userRoleMapperEx.selectByPrimaryKey( id );
-		if( null == userRoleData ){
+	@RedisCache(cachePreKey = "user:role:info",key = "#userId")
+	public List<RoleResponse> selectByUserId(Long userId){
+		List<RoleData> list = this.userRoleMapperEx.selectByUserId( userId );
+		if(CollectionUtils.isEmpty(list)){
 			return null;
 		}
-		return BeanUtils.convert(userRoleData,UserRoleResponse.class);
+		return BeanUtils.convert(list,RoleResponse.class);
 	}
 
 	@Override

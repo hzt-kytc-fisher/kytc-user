@@ -1,7 +1,12 @@
 package com.kytc.user.server.impl;
 
+import com.kytc.framework.cache.aop.ClearCache;
+import com.kytc.framework.cache.aop.RedisCache;
+import com.kytc.framework.exception.BaseErrorCodeEnum;
+import com.kytc.framework.exception.BaseException;
 import com.kytc.framework.web.common.BasePageResponse;
 import com.kytc.framework.web.utils.BeanUtils;
+import com.kytc.user.request.UserInfoSearchRequest;
 import com.kytc.user.server.service.UserInfoService;
 import com.kytc.user.request.UserInfoRequest;
 import com.kytc.user.response.UserInfoResponse;
@@ -21,17 +26,21 @@ public class UserInfoServiceImpl implements UserInfoService {
 	private final UserInfoMapperEx userInfoMapperEx;
 
 	@Override
-	public boolean add(UserInfoRequest request){
-		if( null != request ){
-			UserInfoData userInfoData = BeanUtils.convert(request, UserInfoData.class);
-			userInfoData.setCreatedAt(new Date());
-			userInfoData.setUpdatedAt(new Date());
-			return this.userInfoMapperEx.insert(userInfoData)>0;
+	public Long add(UserInfoRequest request){
+		UserInfoData userInfoData = BeanUtils.convert(request, UserInfoData.class);
+		userInfoData.setCreatedAt(new Date());
+		userInfoData.setUpdatedAt(new Date());
+		request.setRegisterTime(new Date());
+		userInfoData.setIsDeleted(false);
+		this.userInfoMapperEx.insert(userInfoData);
+		if( null == userInfoData.getId() ){
+			throw new BaseException(BaseErrorCodeEnum.SYSTEM_ERROR,"添加用户信息失败");
 		}
-		return false;
+		return userInfoData.getId();
 	}
 
 	@Override
+	@ClearCache(cachePreKey = "user:info",key = "#request.id")
 	public boolean update(UserInfoRequest request){
 		if( null != request ){
 			UserInfoData userInfoData = BeanUtils.convert(request, UserInfoData.class);
@@ -42,6 +51,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 	}
 
 	@Override
+	@RedisCache(cachePreKey = "user:info",key = "#id")
 	public UserInfoResponse detail(Long id){
 		UserInfoData userInfoData = this.userInfoMapperEx.selectByPrimaryKey( id );
 		if( null == userInfoData ){
@@ -51,6 +61,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 	}
 
 	@Override
+	@ClearCache(cachePreKey = "user:info",key = "#id")
 	public boolean delete(Long id){
 		UserInfoData userInfoData = new UserInfoData();
 		userInfoData.setId(id);
@@ -60,23 +71,27 @@ public class UserInfoServiceImpl implements UserInfoService {
 	}
 
 	@Override
-	public BasePageResponse<UserInfoResponse> listByCondition(UserInfoRequest request,int page, int pageSize){
+	public BasePageResponse<UserInfoResponse> listByCondition(UserInfoSearchRequest request){
 		BasePageResponse<UserInfoResponse> pageResponse = new BasePageResponse<>();
-		pageResponse.setRows(this.listByConditionData(request,page, pageSize));
+		pageResponse.setRows(this.listByConditionData(request));
 		pageResponse.setTotal(this.countByConditionData(request));
-		pageResponse.setPage(page);
-		pageResponse.setPageSize(pageSize);
+		pageResponse.setPage(request.getPage());
+		pageResponse.setPageSize(request.getPageSize());
 		return pageResponse;
 	}
 
-	private List<UserInfoResponse> listByConditionData(UserInfoRequest request,int page,int pageSize){
-		int start = page * pageSize;
-		List<UserInfoData> list =  this.userInfoMapperEx.listByCondition(request.getUsername(), request.getNickName(), request.getHeadPicture(), request.getIdCard(), request.getEnabled(), request.getMobile(), request.getIsDeleted(), request.getRegisterTime(), start, pageSize);
+	private List<UserInfoResponse> listByConditionData(UserInfoSearchRequest request){
+		request.init();
+		List<UserInfoData> list =  this.userInfoMapperEx.listByCondition(request.getUsername(), request.getNickName(),
+				request.getIdCard(), request.getEnabled(), request.getMobile(), request.getRegisterTime(),
+				request.getStart(),request.getPageSize());
 		return BeanUtils.convert(list,UserInfoResponse.class);
 	}
 
 
-	private Long countByConditionData(UserInfoRequest request){
-		return this.userInfoMapperEx.countByCondition(request.getUsername(), request.getNickName(), request.getHeadPicture(), request.getIdCard(), request.getEnabled(), request.getMobile(), request.getIsDeleted(), request.getRegisterTime());
+	private Long countByConditionData(UserInfoSearchRequest request){
+		return this.userInfoMapperEx.countByCondition(request.getUsername(), request.getNickName(),
+				request.getIdCard(), request.getEnabled(), request.getMobile(),
+				request.getRegisterTime());
 	}
 }

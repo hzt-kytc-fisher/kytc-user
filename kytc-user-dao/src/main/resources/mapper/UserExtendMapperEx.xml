@@ -25,4 +25,11 @@
 		from t_user_extend
 		<include refid="queryCondition"></include>
 	</select>
+	<select id="getByUserId" resultMap="com.kytc.user.dao.mapper.UserExtendMapper.BaseResultMap">
+		select
+		<include refid="com.kytc.user.dao.mapper.UserExtendMapper.Base_Column_List"></include>
+		from t_user_extend
+		where user_id = #{userId,jdbcType=BIGINT}
+		limit 1
+	</select>
 </mapper>

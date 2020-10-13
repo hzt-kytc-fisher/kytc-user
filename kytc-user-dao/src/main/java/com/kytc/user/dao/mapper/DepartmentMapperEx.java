@@ -12,4 +12,8 @@ public interface DepartmentMapperEx extends DepartmentMapper {
 	Long countByCondition(Long parentId, String deptKey, String deptName);
 
 	DepartmentData getByParentId(Long parentId);
+
+	List<DepartmentData> selectByIds(List<Long> list);
+
+	DepartmentData getByDeptKey(String deptKey);
 }

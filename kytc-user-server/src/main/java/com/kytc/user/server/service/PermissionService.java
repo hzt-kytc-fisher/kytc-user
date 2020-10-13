@@ -1,13 +1,14 @@
 package com.kytc.user.server.service;
 
 import com.kytc.user.request.PermissionRequest;
+import com.kytc.user.request.PermissionSearchRequest;
 import com.kytc.user.response.PermissionResponse;
 import com.kytc.framework.web.common.BasePageResponse;
 
 
 public interface PermissionService {
 
-	boolean add(PermissionRequest request);
+	Long add(PermissionRequest request);
 
 	boolean update(PermissionRequest request);
 
@@ -16,7 +17,5 @@ public interface PermissionService {
 	boolean delete(Long id);
 
 	BasePageResponse<PermissionResponse> listByCondition(
-		PermissionRequest request,
-		int page,
-		int pageSize);
+			PermissionSearchRequest request);
 }

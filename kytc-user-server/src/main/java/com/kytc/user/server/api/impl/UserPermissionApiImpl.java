@@ -2,6 +2,7 @@ package com.kytc.user.server.api.impl;
 
 import com.kytc.user.request.UserPermissionRequest;
 import com.kytc.user.request.UserPermissionSearchRequest;
+import com.kytc.user.response.PermissionResponse;
 import com.kytc.user.response.UserPermissionResponse;
 import com.kytc.user.api.UserPermissionApi;
 import com.kytc.user.server.service.UserPermissionService;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.List;
 
 
 @RestController
@@ -36,5 +38,15 @@ public class UserPermissionApiImpl implements UserPermissionApi {
 	@Override
 	public boolean delete(@PathVariable("id") Long id) {
 		return this.userPermissionService.delete(id);
+	}
+
+	@Override
+	public List<PermissionResponse> selectByUserId(@PathVariable("userId")Long userId) {
+		return null;
+	}
+
+	@Override
+	public List<PermissionResponse> selectByUserIdAll(@PathVariable("userId")Long userId) {
+		return null;
 	}
 }
