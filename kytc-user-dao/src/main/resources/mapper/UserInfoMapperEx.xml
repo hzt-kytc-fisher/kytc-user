@@ -41,4 +41,7 @@
 		from t_user_info
 		<include refid="queryCondition"></include>
 	</select>
+	<update id="updateEnabled">
+		update t_user_info set enabled = #{enabled} where id = #{id,jdbcType=BIGINT}
+	</update>
 </mapper>

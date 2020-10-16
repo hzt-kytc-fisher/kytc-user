@@ -45,4 +45,10 @@
 		on permission.id = up.permission_id
 		where up.user_id = #{userId,jdbcType=BIGINT}
 	</select>
+	<delete id="deleteByUserIdAndPermissionId">
+		delete t_user_permission
+		where
+		user_id = #{userId,jdbcType=BIGINT}
+		AND permission_id = #{permissionId,jdbcType=BIGINT}
+	</delete>
 </mapper>

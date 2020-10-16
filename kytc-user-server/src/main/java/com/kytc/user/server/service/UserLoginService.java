@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface UserLoginService {
 
-	boolean add(UserLoginRequest request);
+	Long add(UserLoginRequest request);
 
 	boolean update(UserLoginRequest request);
 

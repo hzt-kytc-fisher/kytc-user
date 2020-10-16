@@ -47,4 +47,14 @@ public class UserInfoApiImpl implements UserInfoApi {
 	public UserInfoResponse detail(@PathVariable("id") Long id) {
 		return this.userInfoService.detail(id);
 	}
+
+	@Override
+	public boolean disable(@PathVariable("id") Long id) {
+		return false;
+	}
+
+	@Override
+	public boolean enable(@PathVariable("id") Long id) {
+		return false;
+	}
 }

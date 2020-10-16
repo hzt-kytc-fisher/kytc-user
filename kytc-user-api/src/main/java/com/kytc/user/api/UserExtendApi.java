@@ -22,7 +22,7 @@ public interface UserExtendApi {
 
 	@ApiOperation("添加用户扩展信息数据")
 	@PostMapping("/info")
-	boolean add(@RequestBody @Valid UserExtendRequest request);
+	Long add(@RequestBody @Valid UserExtendRequest request);
 
 	@ApiOperation("修改用户扩展信息数据")
 	@PutMapping("/info")

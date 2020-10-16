@@ -30,7 +30,7 @@ public class UserLoginApiImpl implements UserLoginApi {
 	}
 
 	@Override
-	public boolean add(@RequestBody @Valid UserLoginRequest request) {
+	public Long add(@RequestBody @Valid UserLoginRequest request) {
 		return this.userLoginService.add(request);
 	}
 

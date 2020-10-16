@@ -8,7 +8,7 @@ import com.kytc.framework.web.common.BasePageResponse;
 
 public interface UserExtendService {
 
-	boolean add(UserExtendRequest request);
+	Long add(UserExtendRequest request);
 
 	boolean update(UserExtendRequest request);
 

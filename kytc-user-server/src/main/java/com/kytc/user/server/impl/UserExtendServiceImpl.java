@@ -2,6 +2,8 @@ package com.kytc.user.server.impl;
 
 import com.kytc.framework.cache.aop.ClearCache;
 import com.kytc.framework.cache.aop.RedisCache;
+import com.kytc.framework.exception.BaseErrorCodeEnum;
+import com.kytc.framework.exception.BaseException;
 import com.kytc.framework.web.common.BasePageResponse;
 import com.kytc.framework.web.utils.BeanUtils;
 import com.kytc.user.request.UserExtendSearchRequest;
@@ -24,14 +26,16 @@ public class UserExtendServiceImpl implements UserExtendService {
 	private final UserExtendMapperEx userExtendMapperEx;
 
 	@Override
-	public boolean add(UserExtendRequest request){
-		if( null != request ){
-			UserExtendData userExtendData = BeanUtils.convert(request, UserExtendData.class);
-			userExtendData.setCreatedAt(new Date());
-			userExtendData.setUpdatedAt(new Date());
-			return this.userExtendMapperEx.insert(userExtendData)>0;
+	public Long add(UserExtendRequest request){
+		UserExtendResponse response = this.getByUserId(request.getUserId());
+		if( null != response ){
+			throw new BaseException(BaseErrorCodeEnum.DATA_HAS_EXISTS,"扩展数据已经存在");
 		}
-		return false;
+		UserExtendData userExtendData = BeanUtils.convert(request, UserExtendData.class);
+		userExtendData.setCreatedAt(new Date());
+		userExtendData.setUpdatedAt(new Date());
+		this.userExtendMapperEx.insert(userExtendData);
+		return userExtendData.getId();
 	}
 
 	@Override

@@ -116,6 +116,11 @@ public class UserPermissionServiceImpl implements UserPermissionService {
 		return this.countByConditionData(request);
 	}
 
+	@Override
+	public boolean delete(Long userId, Long permissionId) {
+		return this.userPermissionMapperEx.deleteByUserIdAndPermissionId(userId, permissionId)>0;
+	}
+
 	private List<UserPermissionResponse> listByConditionData(UserPermissionSearchRequest request){
 		request.init();
 		List<UserPermissionData> list =  this.userPermissionMapperEx.listByCondition(request.getUserId(), request.getPermissionId(),request.getStart(),request.getLimit());

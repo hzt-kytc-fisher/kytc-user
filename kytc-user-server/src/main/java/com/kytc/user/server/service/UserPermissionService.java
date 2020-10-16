@@ -23,4 +23,6 @@ public interface UserPermissionService {
 	List<PermissionResponse> selectByUserIdAll(Long userId);
 
 	long countByPermissionId(Long permissionId);
+
+	boolean delete(Long userId,Long permissionId);
 }

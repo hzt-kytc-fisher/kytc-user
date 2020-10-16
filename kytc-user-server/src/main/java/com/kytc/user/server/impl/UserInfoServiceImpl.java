@@ -80,6 +80,16 @@ public class UserInfoServiceImpl implements UserInfoService {
 		return pageResponse;
 	}
 
+	@Override
+	public boolean disable(Long userId) {
+		return this.userInfoMapperEx.updateEnabled(userId,false)>0;
+	}
+
+	@Override
+	public boolean enable(Long userId) {
+		return this.userInfoMapperEx.updateEnabled(userId,true)>0;
+	}
+
 	private List<UserInfoResponse> listByConditionData(UserInfoSearchRequest request){
 		request.init();
 		List<UserInfoData> list =  this.userInfoMapperEx.listByCondition(request.getUsername(), request.getNickName(),

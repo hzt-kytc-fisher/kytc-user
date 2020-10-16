@@ -19,4 +19,8 @@ public interface UserInfoService {
 
 	BasePageResponse<UserInfoResponse> listByCondition(
 			UserInfoSearchRequest request);
+
+	boolean disable(Long userId);
+
+	boolean enable(Long userId);
 }

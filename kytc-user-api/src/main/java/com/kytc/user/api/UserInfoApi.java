@@ -35,4 +35,12 @@ public interface UserInfoApi {
 	@ApiOperation("查询用户基本信息详情")
 	@GetMapping("/{id}")
 	UserInfoResponse detail(@PathVariable("id") Long id);
+
+	@ApiOperation("禁用用户")
+	@PutMapping("/{id}/disable")
+	boolean disable(@PathVariable("id") Long id);
+
+	@ApiOperation("启用用户")
+	@PutMapping("/{id}/enable")
+	boolean enable(@PathVariable("id") Long id);
 }

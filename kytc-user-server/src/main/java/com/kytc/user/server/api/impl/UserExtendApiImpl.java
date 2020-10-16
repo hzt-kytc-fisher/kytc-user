@@ -29,7 +29,7 @@ public class UserExtendApiImpl implements UserExtendApi {
 	}
 
 	@Override
-	public boolean add(@RequestBody @Valid UserExtendRequest request) {
+	public Long add(@RequestBody @Valid UserExtendRequest request) {
 		return this.userExtendService.add(request);
 	}
 

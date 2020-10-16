@@ -24,7 +24,7 @@ public interface UserLoginApi {
 
 	@ApiOperation("添加用户登录信息数据")
 	@PostMapping("/info")
-	boolean add(@RequestBody @Valid UserLoginRequest request);
+	Long add(@RequestBody @Valid UserLoginRequest request);
 
 	@ApiOperation("修改用户登录信息数据")
 	@PutMapping("/info")
@@ -39,6 +39,5 @@ public interface UserLoginApi {
 	UserLoginResponse detail(@PathVariable("id") Long id);
 
 	@ApiOperation("登录")
-	@PostMapping("")
 	UserResponse login(@RequestBody @Valid LoginRequest request);
 }

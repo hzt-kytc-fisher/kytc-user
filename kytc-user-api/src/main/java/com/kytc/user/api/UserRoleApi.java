@@ -32,7 +32,7 @@ public interface UserRoleApi {
 
 	@ApiOperation("查询用户角色详情")
 	@GetMapping("/{userId}")
-	List<RoleResponse> selectByUserId(@PathVariable("id") Long userId);
+	List<RoleResponse> selectByUserId(@PathVariable("userId") Long userId);
 
 	@ApiOperation("根据唯一索引删除用户角色数据")
 	@DeleteMapping("/info")

@@ -29,6 +29,10 @@ public class UserRoleServiceImpl implements UserRoleService {
 
 	@Override
 	public Long add(UserRoleRequest request){
+		UserRoleData data = this.userRoleMapperEx.getByUserIdAndRoleId(request.getUserId(),request.getRoleId());
+		if( null != data ){
+			return data.getId();
+		}
 		UserRoleData userRoleData = BeanUtils.convert(request, UserRoleData.class);
 		userRoleData.setCreatedAt(new Date());
 		userRoleData.setUpdatedAt(new Date());

@@ -17,4 +17,5 @@ public interface UserPermissionMapperEx extends UserPermissionMapper {
 
 	List<PermissionData> selectByUserId(Long userId);
 
+	Integer deleteByUserIdAndPermissionId(Long userId,Long permissionId);
 }

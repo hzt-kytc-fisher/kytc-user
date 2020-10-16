@@ -37,17 +37,25 @@ public class UserLoginServiceImpl implements UserLoginService {
 	private final DepartmentService departmentService;
 
 	@Override
-	public boolean add(UserLoginRequest request){
-		if( null != request ){
-			UserLoginData userLoginData = BeanUtils.convert(request, UserLoginData.class);
-			userLoginData.setSalt(RandomStringUtils.randomAlphabetic(64));
-			userLoginData.setLoginPassword(EncryptUtils.getInstance().sha(userLoginData.getSalt(),userLoginData.getLoginPassword()));
-			userLoginData.setCreatedAt(new Date());
-			userLoginData.setIsDeleted(false);
-			userLoginData.setUpdatedAt(new Date());
-			return this.userLoginMapperEx.insert(userLoginData)>0;
+	public Long add(UserLoginRequest request){
+		UserLoginData data = this.userLoginMapperEx.getByLoginTypeAndKey(request.getLoginType().getValue(),request.getLoginKey());
+		if( null != data && data.getUserId().equals(request.getUserId())){
+			throw new BaseException(BaseErrorCodeEnum.DATA_HAS_EXISTS,"该用户已绑定该登录方式");
+		}else if(null != data && !data.getUserId().equals(request.getUserId())){
+			throw new BaseException(BaseErrorCodeEnum.DATA_HAS_EXISTS,"该登录方式已被其他用户占用");
 		}
-		return false;
+		UserLoginData userLoginData = BeanUtils.convert(request, UserLoginData.class);
+		userLoginData.setSalt(RandomStringUtils.randomAlphabetic(64));
+		userLoginData.setLoginPassword(EncryptUtils.getInstance().sha(userLoginData.getSalt(),userLoginData.getLoginPassword()));
+		userLoginData.setLoginType(request.getLoginType().getValue());
+		userLoginData.setCreatedAt(new Date());
+		userLoginData.setIsDeleted(false);
+		userLoginData.setUpdatedAt(new Date());
+		this.userLoginMapperEx.insert(userLoginData);
+		if( null == userLoginData.getId() ){
+			throw new BaseException(BaseErrorCodeEnum.DATA_NOT_FOUND,"添加登录信息失败");
+		}
+		return userLoginData.getId();
 	}
 
 	@Override
