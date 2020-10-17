@@ -16,6 +16,8 @@ public class UserInfoData implements Serializable {
 	private String idCard;//身份证号
 	private Boolean enabled;//是否启用
 	private String mobile;//手机号
+	private Integer sex;//性别 0未知性别 1男性 2女性 9未说明性别
+	private Long deptId;//部门ID
 	private Boolean isDeleted;//是否删除
 	private Date registerTime;//注册时间
 	private String createdBy;//创建人员

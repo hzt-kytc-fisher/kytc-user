@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface UserPermissionService {
 
-	boolean add(UserPermissionRequest request);
+	Long add(UserPermissionRequest request);
 
 	boolean delete(Long id);
 

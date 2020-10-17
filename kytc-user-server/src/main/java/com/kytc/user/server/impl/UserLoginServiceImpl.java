@@ -31,7 +31,6 @@ import java.util.stream.Collectors;
 public class UserLoginServiceImpl implements UserLoginService {
 	private final UserLoginMapperEx userLoginMapperEx;
 	private final UserInfoService userInfoService;
-	private final UserExtendService userExtendService;
 	private final UserRoleService userRoleService;
 	private final UserPermissionService userPermissionService;
 	private final DepartmentService departmentService;
@@ -111,6 +110,9 @@ public class UserLoginServiceImpl implements UserLoginService {
 		if( null == userInfoResponse ){
 			throw new BaseException(BaseErrorCodeEnum.DATA_NOT_FOUND,"未查找到该用户");
 		}
+		if( !userInfoResponse.getEnabled() ){
+			throw new BaseException(BaseErrorCodeEnum.DATA_NOT_FOUND,"该用户被禁用,请联系管理员");
+		}
 		UserResponse userResponse = BeanUtils.convert(userInfoResponse,UserResponse.class);
 		List<UserLoginResponse> loginResponses = this.selectByUserId(userLoginData.getUserId());
 		loginResponses = loginResponses.stream().map(login->{
@@ -122,9 +124,8 @@ public class UserLoginServiceImpl implements UserLoginService {
 			return login;
 		}).collect(Collectors.toList());
 		userResponse.setUserLoginResponses(loginResponses);
-		userResponse.setUserExtendResponse(this.userExtendService.getByUserId(userId));
-		if( null != userResponse.getUserExtendResponse() && null != userResponse.getUserExtendResponse().getDeptId()){
-			List<DepartmentResponse> list = this.departmentService.select(userResponse.getUserExtendResponse().getDeptId());
+		if( userResponse.getDeptId() != -1L ){
+			List<DepartmentResponse> list = this.departmentService.select(userResponse.getDeptId());
 			if( !CollectionUtils.isEmpty(list) ){
 				userResponse.setDepartmentResponse(list.get(0));
 			}

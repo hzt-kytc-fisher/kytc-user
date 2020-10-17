@@ -17,6 +17,5 @@ public class UserResponse extends UserInfoResponse implements Serializable {
 	private DepartmentResponse departmentResponse;
 	private List<PermissionResponse> permissionResponses;
 	private List<String> permissions;
-	private UserExtendResponse userExtendResponse;
 	private List<UserLoginResponse> userLoginResponses;
 }

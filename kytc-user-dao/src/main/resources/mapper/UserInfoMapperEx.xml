@@ -3,23 +3,32 @@
 <mapper namespace="com.kytc.user.dao.mapper.UserInfoMapperEx">
 	<sql id="queryCondition">
 		<where>
-			<if test="username != null and username != ''">
+			<if test="id != null ">
+				and id = #{id,jdbcType=BIGINT}
+			</if>
+			<if test="username != null ">
 				and username = #{username,jdbcType=VARCHAR}
 			</if>
-			<if test="nickName != null and nickname != ''">
+			<if test="nickName != null ">
 				and nick_name = #{nickName,jdbcType=VARCHAR}
 			</if>
-			<if test="headPicture != null and headPicture != ''">
+			<if test="headPicture != null ">
 				and head_picture = #{headPicture,jdbcType=VARCHAR}
 			</if>
-			<if test="idCard != null and idCard != ''">
+			<if test="idCard != null ">
 				and id_card = #{idCard,jdbcType=CHAR}
 			</if>
 			<if test="enabled != null ">
 				and enabled = #{enabled,jdbcType=BIT}
 			</if>
-			<if test="mobile != null and mobile != ''">
+			<if test="mobile != null ">
 				and mobile = #{mobile,jdbcType=VARCHAR}
+			</if>
+			<if test="sex != null ">
+				and sex = #{sex,jdbcType=SMALLINT}
+			</if>
+			<if test="deptId != null ">
+				and dept_id = #{deptId,jdbcType=BIGINT}
 			</if>
 			<if test="registerTime != null ">
 				and register_time = #{registerTime,jdbcType=TIMESTAMP}
@@ -28,12 +37,14 @@
 		</where>
 	</sql>
 	<select id="listByCondition" resultMap="com.kytc.user.dao.mapper.UserInfoMapper.BaseResultMap">
-		select 
+		select
 		<include refid="com.kytc.user.dao.mapper.UserInfoMapper.Base_Column_List"></include>
 		from t_user_info
 		<include refid="queryCondition"></include>
 		order by updated_at desc
-		limit #{start},#{limit}
+		<if test="limit > 0">
+			limit #{start},#{limit}
+		</if>
 	</select>
 	<select id="countByCondition" resultType="Long">
 		select
@@ -44,4 +55,41 @@
 	<update id="updateEnabled">
 		update t_user_info set enabled = #{enabled} where id = #{id,jdbcType=BIGINT}
 	</update>
+
+	<update id="deleteByIdCard">
+		update t_user_info
+		set is_deleted = 1
+		where  id_card = #{idCard,jdbcType=CHAR}
+	</update>
+	<select id="getByIdCard" resultMap="com.kytc.user.dao.mapper.UserInfoMapper.BaseResultMap">
+		select
+		<include refid="com.kytc.user.dao.mapper.UserInfoMapper.Base_Column_List"></include>
+		from t_user_info
+		where  id_card = #{idCard,jdbcType=CHAR}
+		limit 1
+	</select>
+	<update id="deleteByUsername">
+		update t_user_info
+		set is_deleted = 1
+		where  username = #{username,jdbcType=VARCHAR}
+	</update>
+	<select id="getByUsername" resultMap="com.kytc.user.dao.mapper.UserInfoMapper.BaseResultMap">
+		select
+		<include refid="com.kytc.user.dao.mapper.UserInfoMapper.Base_Column_List"></include>
+		from t_user_info
+		where  username = #{username,jdbcType=VARCHAR}
+		limit 1
+	</select>
+	<update id="deleteByMobile">
+		update t_user_info
+		set is_deleted = 1
+		where  mobile = #{mobile,jdbcType=VARCHAR}
+	</update>
+	<select id="getByMobile" resultMap="com.kytc.user.dao.mapper.UserInfoMapper.BaseResultMap">
+		select
+		<include refid="com.kytc.user.dao.mapper.UserInfoMapper.Base_Column_List"></include>
+		from t_user_info
+		where  mobile = #{mobile,jdbcType=VARCHAR}
+		limit 1
+	</select>
 </mapper>

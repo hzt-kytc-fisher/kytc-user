@@ -25,6 +25,10 @@ public class UserInfoResponse implements Serializable {
 	private Boolean enabled;
 	@ApiModelProperty("手机号")
 	private String mobile;
+	@ApiModelProperty("性别 0未知性别 1男性 2女性 9未说明性别")
+	private Integer sex;
+	@ApiModelProperty("部门ID")
+	private Long deptId;
 	@ApiModelProperty("是否删除")
 	private Boolean isDeleted;
 	@ApiModelProperty("注册时间")
@@ -37,6 +41,4 @@ public class UserInfoResponse implements Serializable {
 	private String updatedBy;
 	@ApiModelProperty("修改日期")
 	private Date updatedAt;
-	@ApiModelProperty("最后更新时间")
-	private Date lastUpdatedAt;
 }

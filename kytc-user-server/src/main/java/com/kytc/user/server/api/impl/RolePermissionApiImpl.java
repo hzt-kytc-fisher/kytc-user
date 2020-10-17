@@ -31,7 +31,7 @@ public class RolePermissionApiImpl implements RolePermissionApi {
 	}
 
 	@Override
-	public boolean add(@RequestBody @Valid RolePermissionRequest request) {
+	public Long add(@RequestBody @Valid RolePermissionRequest request) {
 		return this.rolePermissionService.add(request);
 	}
 

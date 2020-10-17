@@ -49,4 +49,11 @@
 			</foreach>
 		)
 	</select>
+	<select id="getByRoleIdAndPermissionId" resultMap="com.kytc.user.dao.mapper.RolePermissionMapper.BaseResultMap">
+		select
+		<include refid="com.kytc.user.dao.mapper.RolePermissionMapper.Base_Column_List"></include>
+		from t_role_permission
+		where role_id = #{roleId,jdbcType=BIGINT}
+		AND permission_id = #{permissionId,jdbcType=BIGINT}
+	</select>
 </mapper>

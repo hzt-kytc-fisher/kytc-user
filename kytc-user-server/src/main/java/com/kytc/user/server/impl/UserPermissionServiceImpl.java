@@ -34,18 +34,16 @@ public class UserPermissionServiceImpl implements UserPermissionService {
 	private final RoleService roleService;
 
 	@Override
-	public boolean add(UserPermissionRequest request){
-		if( null == request ){
-			return false;
-		}
+	public Long add(UserPermissionRequest request){
 		UserPermissionData data = this.userPermissionMapperEx.getByUserIdAndPermissionId(request.getUserId(),request.getPermissionId());
 		if( null != data ){
-			return true;
+			return data.getId();
 		}
 		UserPermissionData userPermissionData = BeanUtils.convert(request, UserPermissionData.class);
 		userPermissionData.setCreatedAt(new Date());
 		userPermissionData.setUpdatedAt(new Date());
-		return this.userPermissionMapperEx.insert(userPermissionData)>0;
+		this.userPermissionMapperEx.insert(userPermissionData);
+		return userPermissionData.getId();
 	}
 
 	@Override

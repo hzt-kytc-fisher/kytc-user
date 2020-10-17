@@ -9,6 +9,8 @@
 		<result column="id_card" jdbcType="CHAR" property="idCard" />
 		<result column="enabled" jdbcType="BIT" property="enabled" />
 		<result column="mobile" jdbcType="VARCHAR" property="mobile" />
+		<result column="sex" jdbcType="SMALLINT" property="sex" />
+		<result column="dept_id" jdbcType="BIGINT" property="deptId" />
 		<result column="is_deleted" jdbcType="BIT" property="isDeleted" />
 		<result column="register_time" jdbcType="TIMESTAMP" property="registerTime" />
 		<result column="created_by" jdbcType="VARCHAR" property="createdBy" />
@@ -17,7 +19,7 @@
 		<result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		id,username,nick_name,head_picture,id_card,enabled,mobile,is_deleted,register_time,created_by,created_at,updated_by,updated_at
+		id,username,nick_name,head_picture,id_card,enabled,mobile,sex,dept_id,is_deleted,register_time,created_by,created_at,updated_by,updated_at
 	</sql>
 	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
 		select 
@@ -29,15 +31,15 @@
 		delete from t_user_info
 		where id = #{id,jdbcType=BIGINT}
 	</delete>
-	<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.kytc.user.dao.data.UserInfoData">
+	<insert id="insert" parameterType="com.kytc.user.dao.data.UserInfoData">
 		insert into t_user_info (
-			id,username,nick_name,head_picture,id_card,enabled,mobile,is_deleted,register_time,created_by,created_at,updated_by,updated_at
+			id,username,nick_name,head_picture,id_card,enabled,mobile,sex,dept_id,is_deleted,register_time,created_by,created_at,updated_by,updated_at
 		) 
 		values (
-			#{id,jdbcType=BIGINT},#{username,jdbcType=VARCHAR},#{nickName,jdbcType=VARCHAR},#{headPicture,jdbcType=VARCHAR},#{idCard,jdbcType=CHAR},#{enabled,jdbcType=BIT},#{mobile,jdbcType=VARCHAR},#{isDeleted,jdbcType=BIT},#{registerTime,jdbcType=TIMESTAMP},#{createdBy,jdbcType=VARCHAR},#{createdAt,jdbcType=TIMESTAMP},#{updatedBy,jdbcType=VARCHAR},#{updatedAt,jdbcType=TIMESTAMP}
+			#{id,jdbcType=BIGINT},#{username,jdbcType=VARCHAR},#{nickName,jdbcType=VARCHAR},#{headPicture,jdbcType=VARCHAR},#{idCard,jdbcType=CHAR},#{enabled,jdbcType=BIT},#{mobile,jdbcType=VARCHAR},#{sex,jdbcType=SMALLINT},#{deptId,jdbcType=BIGINT},#{isDeleted,jdbcType=BIT},#{registerTime,jdbcType=TIMESTAMP},#{createdBy,jdbcType=VARCHAR},#{createdAt,jdbcType=TIMESTAMP},#{updatedBy,jdbcType=VARCHAR},#{updatedAt,jdbcType=TIMESTAMP}
 		)
 	</insert>
-	<insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.kytc.user.dao.data.UserInfoData">
+	<insert id="insertSelective" parameterType="com.kytc.user.dao.data.UserInfoData">
 		insert into t_user_info
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null">
@@ -60,6 +62,12 @@
 			</if>
 			<if test="mobile != null">
 				mobile,
+			</if>
+			<if test="sex != null">
+				sex,
+			</if>
+			<if test="deptId != null">
+				dept_id,
 			</if>
 			<if test="isDeleted != null">
 				is_deleted,
@@ -101,6 +109,12 @@
 			</if>
 			<if test="mobile != null">
 				#{mobile,jdbcType=VARCHAR},
+			</if>
+			<if test="sex != null">
+				#{sex,jdbcType=SMALLINT},
+			</if>
+			<if test="deptId != null">
+				#{deptId,jdbcType=BIGINT},
 			</if>
 			<if test="isDeleted != null">
 				#{isDeleted,jdbcType=BIT},
@@ -146,6 +160,12 @@
 			<if test="mobile != null">
 				mobile = #{mobile,jdbcType=VARCHAR},
 			</if>
+			<if test="sex != null">
+				sex = #{sex,jdbcType=SMALLINT},
+			</if>
+			<if test="deptId != null">
+				dept_id = #{deptId,jdbcType=BIGINT},
+			</if>
 			<if test="isDeleted != null">
 				is_deleted = #{isDeleted,jdbcType=BIT},
 			</if>
@@ -177,6 +197,8 @@
 			id_card = #{idCard,jdbcType=CHAR},
 			enabled = #{enabled,jdbcType=BIT},
 			mobile = #{mobile,jdbcType=VARCHAR},
+			sex = #{sex,jdbcType=SMALLINT},
+			dept_id = #{deptId,jdbcType=BIGINT},
 			is_deleted = #{isDeleted,jdbcType=BIT},
 			register_time = #{registerTime,jdbcType=TIMESTAMP},
 			created_by = #{createdBy,jdbcType=VARCHAR},

@@ -24,7 +24,7 @@ public interface UserPermissionApi {
 
 	@ApiOperation("添加角色权限信息数据")
 	@PostMapping("/info")
-	boolean add(@RequestBody @Valid UserPermissionRequest request);
+	Long add(@RequestBody @Valid UserPermissionRequest request);
 
 	@ApiOperation("删除角色权限信息数据")
 	@DeleteMapping("/{id}")

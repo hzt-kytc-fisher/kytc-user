@@ -15,4 +15,6 @@ public interface RolePermissionMapperEx extends RolePermissionMapper {
 	List<PermissionData> selectByRoleId(Long roleId);
 
 	List<PermissionData> selectByRoleIds(List<Long> list);
+
+	RolePermissionData getByRoleIdAndPermissionId(Long roleId,Long permissionId);
 }

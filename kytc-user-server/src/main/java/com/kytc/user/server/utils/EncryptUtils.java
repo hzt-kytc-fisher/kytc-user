@@ -27,10 +27,4 @@ public class EncryptUtils {
     public String sha(String salt,String str){
         return Hashing.sha256().newHasher().putString(salt + str, Charsets.UTF_8).hash().toString();
     }
-
-    public static void main(String[] args) {
-        String salt = RandomStringUtils.randomAlphabetic(64);
-        String p = EncryptUtils.getInstance().sha(salt,"123456111111111111111");
-        System.out.println(salt+"\n"+p);
-    }
 }

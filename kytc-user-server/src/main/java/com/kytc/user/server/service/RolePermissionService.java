@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface RolePermissionService {
 
-	boolean add(RolePermissionRequest request);
+	Long add(RolePermissionRequest request);
 
 	boolean delete(Long id);
 

@@ -1,5 +1,7 @@
 package com.kytc.user.server.impl;
 
+import com.kytc.framework.exception.BaseErrorCodeEnum;
+import com.kytc.framework.exception.BaseException;
 import com.kytc.framework.web.common.BasePageResponse;
 import com.kytc.framework.web.utils.BeanUtils;
 import com.kytc.user.dao.data.PermissionData;
@@ -25,11 +27,16 @@ public class RolePermissionServiceImpl implements RolePermissionService {
 	private final RolePermissionMapperEx rolePermissionMapperEx;
 
 	@Override
-	public boolean add(RolePermissionRequest request){
+	public Long add(RolePermissionRequest request){
+		RolePermissionData data = this.rolePermissionMapperEx.getByRoleIdAndPermissionId(request.getRoleId(),request.getPermissionId());
+		if( null != data ){
+			return data.getId();
+		}
 		RolePermissionData rolePermissionData = BeanUtils.convert(request, RolePermissionData.class);
 		rolePermissionData.setCreatedAt(new Date());
 		rolePermissionData.setUpdatedAt(new Date());
-		return this.rolePermissionMapperEx.insert(rolePermissionData)>0;
+		this.rolePermissionMapperEx.insert(rolePermissionData);
+		return rolePermissionData.getId();
 	}
 
 	@Override
@@ -83,6 +90,4 @@ public class RolePermissionServiceImpl implements RolePermissionService {
 	private Long countByConditionData(RolePermissionSearchRequest request){
 		return this.rolePermissionMapperEx.countByCondition(request.getRoleId(), request.getPermissionId());
 	}
-
-
 }

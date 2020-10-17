@@ -31,7 +31,7 @@ public class UserPermissionApiImpl implements UserPermissionApi {
 	}
 
 	@Override
-	public boolean add(@RequestBody @Valid UserPermissionRequest request) {
+	public Long add(@RequestBody @Valid UserPermissionRequest request) {
 		return this.userPermissionService.add(request);
 	}
 
