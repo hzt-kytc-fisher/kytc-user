@@ -39,5 +39,6 @@ public interface UserLoginApi {
 	UserLoginResponse detail(@PathVariable("id") Long id);
 
 	@ApiOperation("登录")
+	@RequestMapping
 	UserResponse login(@RequestBody @Valid LoginRequest request);
 }

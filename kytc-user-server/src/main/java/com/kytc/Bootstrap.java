@@ -7,6 +7,7 @@
  */
 package com.kytc;
 
+import com.ctrip.framework.apollo.spring.annotation.EnableApolloConfig;
 import com.github.xiaoymin.swaggerbootstrapui.annotations.EnableSwaggerBootstrapUI;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
@@ -34,6 +35,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @MapperScan("com.kytc.user.dao.mapper")
 @EnableAspectJAutoProxy
 @EnableScheduling
+@EnableApolloConfig
 public class Bootstrap {
     public static void main(String[] args) {
         SpringApplication.run(Bootstrap.class, args);

@@ -119,6 +119,16 @@ public class UserPermissionServiceImpl implements UserPermissionService {
 		return this.userPermissionMapperEx.deleteByUserIdAndPermissionId(userId, permissionId)>0;
 	}
 
+	@Override
+	@RedisCache(cachePreKey = "user:permission:all:key",key = "#userId")
+	public List<String> getAllPermissionByUserId(Long userId) {
+		List<PermissionResponse> list = this.selectByUserIdAll(userId);
+		if( CollectionUtils.isEmpty(list) ){
+			return null;
+		}
+		return list.stream().map(PermissionResponse::getPermissionKey).distinct().collect(Collectors.toList());
+	}
+
 	private List<UserPermissionResponse> listByConditionData(UserPermissionSearchRequest request){
 		request.init();
 		List<UserPermissionData> list =  this.userPermissionMapperEx.listByCondition(request.getUserId(), request.getPermissionId(),request.getStart(),request.getLimit());

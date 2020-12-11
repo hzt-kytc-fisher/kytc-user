@@ -12,6 +12,7 @@ import com.kytc.framework.web.common.BasePageResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -22,7 +23,8 @@ import javax.validation.Valid;
 @Slf4j
 public class UserLoginApiImpl implements UserLoginApi {
 	private final UserLoginService userLoginService;
-
+	@Value("${test.test}")
+	private String test;
 	@Override
 	public BasePageResponse<UserLoginResponse> listByCondition(
 		@RequestBody @Valid UserLoginSearchRequest request){
@@ -50,9 +52,8 @@ public class UserLoginApiImpl implements UserLoginApi {
 	}
 
 	@Override
-	@RequestMapping
 	public UserResponse login(@Valid LoginRequest request) {
-		log.info("user login,loginKey:{},loginType:{}",request.getLoginKey(),request.getLoginTypeEnum());
+		log.info("user login,loginKey:{},loginType:{},test:{}",request.getLoginKey(),request.getLoginTypeEnum(),test);
 		return this.userLoginService.login(request);
 	}
 }

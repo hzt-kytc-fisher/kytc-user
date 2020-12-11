@@ -25,4 +25,6 @@ public interface UserPermissionService {
 	long countByPermissionId(Long permissionId);
 
 	boolean delete(Long userId,Long permissionId);
+
+	List<String> getAllPermissionByUserId(Long userId);
 }

@@ -1,5 +1,6 @@
 package com.kytc.user.server.impl;
 
+import com.kytc.framework.cache.redis.RedisUtil;
 import com.kytc.framework.exception.BaseErrorCodeEnum;
 import com.kytc.framework.exception.BaseException;
 import com.kytc.framework.web.common.BasePageResponse;
@@ -34,6 +35,7 @@ public class UserLoginServiceImpl implements UserLoginService {
 	private final UserRoleService userRoleService;
 	private final UserPermissionService userPermissionService;
 	private final DepartmentService departmentService;
+	private final RedisUtil redisUtil;
 
 	@Override
 	public Long add(UserLoginRequest request){
@@ -135,6 +137,7 @@ public class UserLoginServiceImpl implements UserLoginService {
 		List<PermissionResponse> permissions = this.userPermissionService.selectByUserIdAll(userId);
 		if(!CollectionUtils.isEmpty(permissions)){
 			List<String> pers = permissions.stream().map(PermissionResponse::getPermissionKey).distinct().collect(Collectors.toList());
+
 			userResponse.setPermissions(pers);
 		}
 		return userResponse;
